@@ -1,9 +1,5 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide, useSwiper, } from 'swiper/react';
