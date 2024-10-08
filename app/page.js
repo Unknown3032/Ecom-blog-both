@@ -3,8 +3,9 @@ import Home from '../components/Home'
 
 export default function Page() {
   return (
-    <div>
+    <div className={'min-h-[200vh]'} >
       <Home />
+
     </div>
   );
 }

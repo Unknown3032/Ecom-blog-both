@@ -25,6 +25,8 @@ const Navbar = ({ setUser, user }) => {
     const [cartItems, setCartItems] = useState()
     const [userNavigate, setUserNavigate] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
+    const [background, setBackground] = useState("bg-transparent ")
+    const [searchHeight, setSearchHeight] = useState(80)
     // console.log(user);
 
     // console.log(user.data.profile_img);
@@ -39,12 +41,29 @@ const Navbar = ({ setUser, user }) => {
             setShow("translate-y-0");
         }
         setLastScrollY(window.scrollY);
+
+        setSearchHeight(80 + window.scrollY)
+    };
+
+    const controlNavbarBg = () => {
+        if (window.scrollY > 50) {
+            if (window.scrollY > lastScrollY && !mobileMenu) {
+                setBackground("bg-black ");
+            } else {
+                setShow("shadow-sm");
+            }
+        } else {
+            setBackground("bg-transparent ");
+        }
+        setLastScrollY(window.scrollY);
     };
 
     useEffect(() => {
         window.addEventListener("scroll", controlNavbar);
+        window.addEventListener("scroll", controlNavbarBg);
         return () => {
             window.removeEventListener("scroll", controlNavbar);
+            window.removeEventListener("scroll", controlNavbarBg);
         };
     }, [lastScrollY]);
 
@@ -63,11 +82,11 @@ const Navbar = ({ setUser, user }) => {
     return (
         <>
             <header
-                className={`w-full h-[60px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 shadow-sm ${show} py-2`}
+                className={`w-full h-[60px] md:h-[70px] ${!mobileMenu ? background : "bg-black"} flex items-center  justify-between z-40 top-0  duration-300 shadow-sm ${show} py-2 transition-all sticky  duration-300 hover:bg-black `}
             >
                 <Wrapper className="h-[70px] flex justify-between items-center">
                     <Link href="/">
-                        <img src="/hindu.png" className="md:w-[150px] w-24" />
+                        <img src="/hindu.png" className="md:w-[120px] w-24" />
                     </Link>
                     {/* menu for desktop  */}
                     <Menu
@@ -83,7 +102,7 @@ const Navbar = ({ setUser, user }) => {
                                 initial='hidden'
                                 animate='show'
                                 exit='hidden'
-                                className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black"
+                                className="flex flex-col md:hidden  font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-black border-t text-white"
                             >
                                 <MenuMobile
                                     showCatMenu={showCatMenu}
@@ -98,16 +117,16 @@ const Navbar = ({ setUser, user }) => {
                     </AnimatePresence>
 
                     {/* icons  */}
-                    <div className="flex items-center gap-2 text-black">
+                    <div className="flex items-center gap-2 text-white">
 
-                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative"
+                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative"
                             onClick={handleSearch}
                         >
                             <BsSearch className="text-[15px] md:text-[20px]" />
                         </div>
 
                         <Link href="/cart">
-                            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
+                            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative">
                                 <BsCart className="text-[15px] md:text-[20px]" />
                                 {cartItems && Object.keys(cartItems)?.length > 0 &&
                                     <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
@@ -119,7 +138,7 @@ const Navbar = ({ setUser, user }) => {
 
                         {/* Icon end */}
 
-                        {!user ? <div className="group w-8 md:w-12 h-8 md:h-12 rounded-full flex flex-col justify-center items-center hover:bg-black/[0.05] cursor-pointer relative ">
+                        {!user ? <div className="group w-8 md:w-12 h-8 md:h-12 rounded-full flex flex-col justify-center items-center hover:bg-white/20 cursor-pointer relative ">
                             <Link href={'/signIn'}>
                                 <IoLogInOutline className="text-[19px] md:text-[24px]" />
                             </Link>
@@ -141,7 +160,7 @@ const Navbar = ({ setUser, user }) => {
                         }
 
                         {/* Mobile icon start */}
-                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
+                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-white/20 cursor-pointer relative -mr-2">
                             {mobileMenu ? (
                                 <VscChromeClose
                                     className="text-[16px]"
@@ -157,34 +176,36 @@ const Navbar = ({ setUser, user }) => {
                         {/* Mobile icon end */}
                     </div>
                 </Wrapper>
+
+                {/* search start  */}
+                {searchOpen && <div className={`w-full flex justify-around items-center z-50 md:mt-[152.5px] mt-[140.5px] bg-white h-20 absolute`}>
+                    <div className='w-[80vw] border border-gray-200 rounded-md'>
+                        <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+                            <div className="grid place-items-center h-full w-12 text-gray-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+
+                            <input
+                                className="peer w-full outline-none text-sm text-gray-700 pr-2"
+                                type="text"
+                                id="search"
+                                placeholder="Search something.." />
+                        </div>
+                    </div>
+                    <div className="flex justify-center w-[10vw]">
+                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative"
+                            onClick={handleSearch}
+                        >
+                            <VscChromeClose className="text-[15px] md:text-[20px]" />
+                        </div>
+                    </div>
+                </div>}
+                {/* search end */}
             </header>
 
-            {/* search start  */}
-            {searchOpen && <div className="w-full flex justify-around items-center z-30  bg-white h-20 absolute">
-                <div className='w-[80vw] border border-gray-200 rounded-md'>
-                    <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
-                        <div className="grid place-items-center h-full w-12 text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
 
-                        <input
-                            className="peer w-full outline-none text-sm text-gray-700 pr-2"
-                            type="text"
-                            id="search"
-                            placeholder="Search something.." />
-                    </div>
-                </div>
-                <div className="flex justify-center w-[10vw]">
-                    <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative"
-                        onClick={handleSearch}
-                    >
-                        <VscChromeClose className="text-[15px] md:text-[20px]" />
-                    </div>
-                </div>
-            </div>}
-            {/* search end */}
         </>
     );
 };

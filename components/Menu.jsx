@@ -18,7 +18,7 @@ const subMenuData = [
 
 const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
     return (
-        <ul className="hidden md:flex items-center gap-8 font-medium text-black">
+        <ul className="hidden md:flex items-center gap-8 font-medium text-white">
             {data.map((item) => {
                 return (
                     <React.Fragment key={item.id}>
@@ -32,8 +32,8 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
                                 <BsChevronDown size={14} />
                                 {/* dropdown */}
                                 {showCatMenu && (
-                                    <div className="w-56 bg-white rounded shadow-md absolute top-5 
-                                    left-1/2 transform -translate-x-1/2 z-10
+                                    <div className="w-56 bg-black rounded shadow-md absolute top-4
+                                    left-1/2 transform -translate-x-1/2 z-10 py-7
                                     overflow-hidden mt-2">
                                         {categories?.length === 0 ? (
                                             <p>Loading...</p>
@@ -43,7 +43,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
                                                     <Link href={`/category/${catItem.name}`} key={`${item.id}-${catItem.id}`}>
                                                         <li
                                                             onClick={() => setShowCatMenu(false)}
-                                                            className="px-4 py-2 hover:bg-gray-10
+                                                            className="px-4 py-2 hover:bg-white/20
                                                         transition duration-150 ease-in-out"
                                                         >
                                                             {`${item.name}: ${catItem.name.toUpperCase()} `}
@@ -53,34 +53,6 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
                                             </ul>
                                         )}
                                     </div>
-                                )}
-
-
-                                {showCatMenu && (
-                                    <ul className="bg-white absolute top-6 left-0 min-w-[250px] px-1 py-1 text-black shadow-lg">
-                                        {categories?.map(
-                                            ({ attributes: c, id }) => {
-                                                return (
-                                                    <Link
-                                                        key={id}
-                                                        href={`/category/${c.slug}`}
-                                                        onClick={() =>
-                                                            setShowCatMenu(
-                                                                false
-                                                            )
-                                                        }
-                                                    >
-                                                        <li className="h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md">
-                                                            {c.name}
-                                                            <span className="opacity-50 text-sm">
-                                                                {`(${c.products.data.length})`}
-                                                            </span>
-                                                        </li>
-                                                    </Link>
-                                                );
-                                            }
-                                        )}
-                                    </ul>
                                 )}
                             </li>
                         ) : (
