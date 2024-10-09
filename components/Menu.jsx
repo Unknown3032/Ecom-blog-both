@@ -24,7 +24,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
                     <React.Fragment key={item.id}>
                         {!!item?.subMenu ? (
                             <li
-                                className="cursor-pointer flex items-center gap-2 relative"
+                                className="cursor-pointer flex items-center gap-2 relative hover:text-white/80 transition-all duration-300 "
                                 onMouseEnter={() => setShowCatMenu(true)}
                                 onMouseLeave={() => setShowCatMenu(false)}
                             >
@@ -32,13 +32,13 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
                                 <BsChevronDown size={14} />
                                 {/* dropdown */}
                                 {showCatMenu && (
-                                    <div className="w-56 bg-black rounded shadow-md absolute top-4
+                                    <div className="w-56 bg-bgblack rounded shadow-md absolute top-4
                                     left-1/2 transform -translate-x-1/2 z-10 py-7
                                     overflow-hidden mt-2">
                                         {categories?.length === 0 ? (
                                             <p>Loading...</p>
                                         ) : (
-                                            <ul className="text-sm divide-y">
+                                            <ul className="text-sm divide-y text-white">
                                                 {subMenuData.map((catItem) => (
                                                     <Link href={`/category/${catItem.name}`} key={`${item.id}-${catItem.id}`}>
                                                         <li
@@ -56,7 +56,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
                                 )}
                             </li>
                         ) : (
-                            <li className="cursor-pointer">
+                            <li className="cursor-pointer hover:text-white/80 transition-all duration-300">
                                 <Link href={item?.url}>{item.name}</Link>
                             </li>
                         )}

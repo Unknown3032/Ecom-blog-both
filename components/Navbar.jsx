@@ -48,7 +48,7 @@ const Navbar = ({ setUser, user }) => {
     const controlNavbarBg = () => {
         if (window.scrollY > 50) {
             if (window.scrollY > lastScrollY && !mobileMenu) {
-                setBackground("bg-black ");
+                setBackground("bg-bgblack ");
             } else {
                 setShow("shadow-sm");
             }
@@ -81,8 +81,9 @@ const Navbar = ({ setUser, user }) => {
 
     return (
         <>
+
             <header
-                className={`w-full h-[60px] md:h-[70px] ${!mobileMenu ? background : "bg-black"} flex items-center  justify-between z-40 top-0  duration-300 shadow-sm ${show} py-2 transition-all sticky  duration-300 hover:bg-black `}
+                className={`w-full h-[60px] md:h-[70px] ${!mobileMenu ? background : "bg-bgblack"} flex items-center  justify-between z-40 top-0  duration-300 shadow-sm ${show} py-2 transition-all sticky  duration-300 hover:bg-black `}
             >
                 <Wrapper className="h-[70px] flex justify-between items-center">
                     <Link href="/">
@@ -102,7 +103,7 @@ const Navbar = ({ setUser, user }) => {
                                 initial='hidden'
                                 animate='show'
                                 exit='hidden'
-                                className="flex flex-col md:hidden  font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-black border-t text-white"
+                                className="flex flex-col md:hidden  font-bold absolute top-[58px] left-0 w-full h-[calc(100vh-50px)] bg-black border-t text-white"
                             >
                                 <MenuMobile
                                     showCatMenu={showCatMenu}
@@ -117,7 +118,7 @@ const Navbar = ({ setUser, user }) => {
                     </AnimatePresence>
 
                     {/* icons  */}
-                    <div className="flex items-center gap-2 text-white">
+                    <div className="flex items-center gap-2 text-[#eeeeee]">
 
                         <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative"
                             onClick={handleSearch}
@@ -160,7 +161,7 @@ const Navbar = ({ setUser, user }) => {
                         }
 
                         {/* Mobile icon start */}
-                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-white/20 cursor-pointer relative -mr-2">
+                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center transition-all duration-200 hover:bg-white/20 cursor-pointer relative -mr-2">
                             {mobileMenu ? (
                                 <VscChromeClose
                                     className="text-[16px]"
@@ -175,8 +176,8 @@ const Navbar = ({ setUser, user }) => {
                         </div>
                         {/* Mobile icon end */}
                     </div>
-                </Wrapper>
 
+                </Wrapper>
                 {/* search start  */}
                 {searchOpen && <div className={`w-full flex justify-around items-center z-50 md:mt-[152.5px] mt-[140.5px] bg-white h-20 absolute`}>
                     <div className='w-[80vw] border border-gray-200 rounded-md'>
@@ -195,7 +196,7 @@ const Navbar = ({ setUser, user }) => {
                         </div>
                     </div>
                     <div className="flex justify-center w-[10vw]">
-                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative"
+                        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center transition duration-300 hover:bg-white/20 cursor-pointer relative"
                             onClick={handleSearch}
                         >
                             <VscChromeClose className="text-[15px] md:text-[20px]" />
@@ -203,8 +204,8 @@ const Navbar = ({ setUser, user }) => {
                     </div>
                 </div>}
                 {/* search end */}
+                <hr className=' absolute h-[0.01vh] w-full text-white/20 bg-white/20 md:mt-[70px] mt-[60px]' />
             </header>
-
 
         </>
     );

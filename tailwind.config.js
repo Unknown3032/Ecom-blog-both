@@ -1,4 +1,6 @@
+
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
 	darkMode: ["class"],
 	content: [
@@ -7,9 +9,21 @@ module.exports = {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		fontFamily: {
+			'sans': ['ui-sans-serif', 'system-ui'],
+			'serif': ['ui-serif', 'Georgia'],
+			'mono': ['ui-monospace', 'SFMono-Regular'],
+			'arvo': ["Arvo", "serif"],
+			'gelasio': ["Gelasio", "serif"],
+			"crimson": ["Crimson Text", "serif"],
+			"gothic": ["Dela Gothic One", "sans-serif"],
+			"days": ["Days One", "sans-serif"],
+			"canon": ["IM Fell French Canon SC", "serif"],
+		},
 		colors: {
-			white: '#FFFFFF',
+			white: '#eeeeee',
 			black: '#242424',
+			bgblack: "#232931",
 			grey: '#F3F3F3',
 			'dark-grey': '#6B6B6B',
 			red: '#FF4E4E',
@@ -19,11 +33,11 @@ module.exports = {
 		},
 		fontSize: {
 			sm: '12px',
-			base: '14px',
+			lg: '14px',
 			xl: '16px',
 			'2xl': '20px',
 			'3xl': '28px',
-			'4xl': '38px',
+			'4xl': '32px',
 			'5xl': '50px'
 		},
 		extend: {

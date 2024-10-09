@@ -27,7 +27,7 @@ const MenuMobile = ({
     mobileMenu
 }) => {
     return (
-        <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-black border-t text-white">
+        <ul className="flex flex-col md:hidden font-bold absolute  left-0 w-full h-[calc(100vh-50px)] bg-bgblack border-t text-white">
             {data.map((item) => {
                 return (
                     <React.Fragment key={item.id}>
@@ -41,7 +41,7 @@ const MenuMobile = ({
                                     <BsChevronDown size={14} />
                                 </div>
                                 {showCatMenu && (
-                                    <div className="w-full bg-black rounded shadow-md absolute top-10 
+                                    <div className="w-full bg-bgblack rounded shadow-md absolute top-10 
                                     left-1/2 transform -translate-x-1/2 z-10
                                     overflow-hidden mt-2">
                                         {categories?.length === 0 ? (
@@ -82,7 +82,7 @@ const MenuMobile = ({
                                 )}
 
                                 {showCatMenu && (
-                                    <ul className="bg-black/[0.05] -mx-5 mt-4 -mb-4">
+                                    <ul className="bg-bgblack -mx-5 mt-4 -mb-4">
                                         {categories?.map(
                                             ({ attributes: c, id }) => {
                                                 return (
