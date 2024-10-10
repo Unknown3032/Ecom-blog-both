@@ -109,8 +109,8 @@ export default function HeroBanner() {
                         </SwiperButtonPrev> */}
 
                         <SwiperSlide>
-                            <img className='hidden md:flex min-h-screen  md:min-h-[102vh] object-cover brightness-90 grayscale-5' src="/slide4.webp" alt="" srcSet="" />
-                            <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" />
+                            <img className=' min-h-screen  md:min-h-[102vh] object-cover brightness-90 grayscale-5' src="/slide4.webp" alt="" srcSet="" />
+                            {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" /> */}
                             <motion.div
                                 initial={{
                                     opacity: 0,
@@ -123,16 +123,20 @@ export default function HeroBanner() {
                                 viewport={{
                                     amount: "all"
                                 }}
-                                className='absolute z-20 top-[85vh] md:left-8 left-4'>
-                                <h1 className='md:text-5xl text-4xl font-bold'>New Arrivals</h1>
+                                className='absolute z-20 top-[82vh] md:left-8 left-4'>
+
+                                <motion.h1
+                                    className='md:text-5xl text-4xl font-bold'>New Arrivals</motion.h1>
+
                                 <p className="text-2xl  -mt-2">It's The Standard</p>
                             </motion.div>
+
                         </SwiperSlide>
 
                         <SwiperSlide>
-                            <img className='hidden md:flex min-h-screen md:min-h-[102vh] object-cover brightness-90' src="/slide5.webp" alt="" srcSet="" />
-                            <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE2.webp" alt="" srcSet="" />
-                            <motion.div className='absolute z-20 top-[85vh] md:left-8 left-4'>
+                            <img className=' min-h-screen md:min-h-[102vh] object-cover brightness-90' src="/slide5.webp" alt="" srcSet="" />
+                            {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE2.webp" alt="" srcSet="" /> */}
+                            <motion.div className='absolute z-20 top-[82vh] md:left-8 left-4'>
                                 <h1 className='md:text-5xl text-4xl font-bold'>Best Seller</h1>
                                 <p className="text-2xl  -mt-2">It's The Standard</p>
                             </motion.div>
