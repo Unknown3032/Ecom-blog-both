@@ -1,12 +1,19 @@
 import { useSwiper } from "swiper/react";
 
-export const SwiperButtonNext = ({ children }) => {
+export const SwiperButtonNext = ({ children, setControlSlide }) => {
     const swiper = useSwiper();
-    return <button className='absolute z-30 right-0 lg:top-80 md:top-52 text-4xl' onClick={() => swiper.slideNext()}>{children}</button>;
+    return <button
+        onMouseEnter={() => setControlSlide(true)}
+        onMouseLeave={() => setControlSlide(false)}
+        className='absolute z-30 right-2 bottom-5 text-4xl opacity-70 text-white bg-dark-grey rounded-full hover:opacity-100'
+        onClick={() => swiper.slideNext()}>{children}</button>;
 };
 
-export const SwiperButtonPrev = ({ children }) => {
+export const SwiperButtonPrev = ({ children, setControlSlide }) => {
     const swiper = useSwiper();
-    return <button className='absolute z-30 left-0 lg:top-80 md:top-52 text-4xl' onClick={() => swiper.slidePrev()}>{children}</button>;
+    return <button
+        onMouseEnter={() => setControlSlide(true)}
+        onMouseLeave={() => setControlSlide(false)}
+        className='absolute z-30 left-2 bottom-5 text-4xl opacity-70 text-white bg-dark-grey rounded-full hover:opacity-100' onClick={() => swiper.slidePrev()}>{children}</button>;
 };
 

@@ -7,6 +7,7 @@ import { VelocityScroll } from './ui/scroll-based-velocity'
 import GradualSpacing from "./ui/gradual-spacing";
 import { fadeIn } from '@/varient';
 import { useScroll, motion, useTransform } from 'framer-motion';
+import ProductSlider from './ProductSlider/ProductSlider'
 
 
 
@@ -53,6 +54,8 @@ const Home = () => {
                         text="Latest Products"
                     />
                     {/* heading  end */}
+
+                    <ProductSlider />
                 </div>
 
 

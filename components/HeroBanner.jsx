@@ -36,37 +36,20 @@ const images = [
 
 const slideData = [
     {
-        img: "/slide2.webp",
-        title: 'Slide 1',
-        desc: 'This is the first slide.',
-        subTitle: "Modern Sadhu"
+        img: "/slide4.webp",
+        title: 'New Arrivals',
+        desc: "It's The Standard",
     },
     {
-        img: "/slide3.webp",
-        title: 'Slide 2',
-        desc: 'This is the first slide.',
-        subTitle: "Modern Sadhu"
-    }
-    ,
-    {
-        img: "/slide1.webp",
-        title: 'Slide 3',
-        desc: 'This is the first slide.',
-        subTitle: "Modern Sadhu"
+        img: "/slide5.webp",
+        title: 'Best Seller',
+        desc: "It's The Standard",
     }
 ]
 
-const initialData = slideData[0]
 
 
 export default function HeroBanner() {
-    const imageRef = useRef();
-    const { scrollYProgress } = useScroll({
-        delay: 0.5,
-        target: imageRef,
-        offset: ["0 1", "1.33"]
-    })
-
 
     return (
         <>
@@ -84,7 +67,7 @@ export default function HeroBanner() {
                     viewport={{
                         amount: "all"
                     }}
-                    ref={imageRef}>
+                >
                     <Swiper
                         // install Swiper modules
                         modules={[Navigation, Pagination, Scrollbar, Autoplay, EffectFade]}
@@ -108,39 +91,46 @@ export default function HeroBanner() {
                             <MdKeyboardArrowLeft className='hidden md:flex' />
                         </SwiperButtonPrev> */}
 
-                        <SwiperSlide>
-                            <img className=' min-h-screen  md:min-h-[102vh] object-cover brightness-90 grayscale-5' src="/slide4.webp" alt="" srcSet="" />
-                            {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" /> */}
-                            <motion.div
-                                initial={{
-                                    opacity: 0,
-                                }}
-                                animate='show'
-                                exit='hidden'
-                                whileInView={{
-                                    opacity: 1,
-                                }}
-                                viewport={{
-                                    amount: "all"
-                                }}
-                                className='absolute z-20 top-[82vh] md:left-8 left-4'>
+                        {
+                            slideData?.map((slide, i) => {
+                                return <SwiperSlide key={i}>
+                                    <>
+                                        <img className=' min-h-screen  md:min-h-[102vh] object-cover brightness-90 grayscale-5' src={slide?.img} alt={slide?.title} />
+                                        {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" /> */}
+                                        <motion.div
+                                            key={slide?.title}
+                                            initial={{
+                                                opacity: 0,
+                                            }}
+                                            animate='show'
+                                            exit='hidden'
+                                            whileInView={{
+                                                opacity: 1,
+                                            }}
+                                            viewport={{
+                                                amount: "all"
+                                            }}
+                                            className='absolute z-20 top-[82vh] md:left-8 left-4'>
 
-                                <motion.h1
-                                    className='md:text-5xl text-4xl font-bold'>New Arrivals</motion.h1>
+                                            <motion.h1
+                                                className='md:text-5xl text-4xl font-bold'>{slide?.title}</motion.h1>
 
-                                <p className="text-2xl  -mt-2">It's The Standard</p>
-                            </motion.div>
+                                            <p className="text-2xl  -mt-2">{slide?.desc}</p>
+                                        </motion.div>
+                                    </>
+                                </SwiperSlide>
+                            })
+                        }
 
-                        </SwiperSlide>
 
-                        <SwiperSlide>
+                        {/* <SwiperSlide>
                             <img className=' min-h-screen md:min-h-[102vh] object-cover brightness-90' src="/slide5.webp" alt="" srcSet="" />
-                            {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE2.webp" alt="" srcSet="" /> */}
+                            <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE2.webp" alt="" srcSet="" />
                             <motion.div className='absolute z-20 top-[82vh] md:left-8 left-4'>
                                 <h1 className='md:text-5xl text-4xl font-bold'>Best Seller</h1>
                                 <p className="text-2xl  -mt-2">It's The Standard</p>
                             </motion.div>
-                        </SwiperSlide>
+                        </SwiperSlide> */}
                     </Swiper>
                 </motion.div>
 
