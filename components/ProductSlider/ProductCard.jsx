@@ -56,7 +56,7 @@ const ProductCard = ({ product, css, csstext }) => {
 
 
                         {product?.images?.map((img, i) => {
-                            return <SwiperSlide>
+                            return <SwiperSlide key={i}>
                                 <img onMouseEnter={() => setControlSlide(true)}
                                     onMouseLeave={() => setControlSlide(false)} className={`object-cover rounded-2xl aspect-2/3 `} src={img} alt={product?.title} />
                             </SwiperSlide>
