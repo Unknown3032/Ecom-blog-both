@@ -33,8 +33,8 @@ const ProductCard = ({ product, css, csstext }) => {
                         // install Swiper modules
                         modules={[Navigation, Scrollbar, Autoplay]}
                         autoplay={{
-                            delay: 3500,
-                            disableOnInteraction: false,
+                            delay: 5000,
+                            disableOnInteraction: true,
                         }}
                         loop={true}
                         spaceBetween={0}
@@ -68,8 +68,8 @@ const ProductCard = ({ product, css, csstext }) => {
 
                 {/* text start  */}
                 <div className={`${csstext}`}>
-                    <h2>{product?.title}</h2>
-                    <p className='text-xl text-grey/80'>{Object.keys(product?.colors[0])[0]}. {product?.colors.length} colors</p>
+                    <h2 className='md:text-xl '>{product?.title}</h2>
+                    <p className='text-sm text-grey/80'>{Object.keys(product?.colors[0])[0]}. {product?.colors.length} colors</p>
                     <p className='-mt-1'> &#8377;{product?.price}</p>
                 </div>
                 {/* text end  */}

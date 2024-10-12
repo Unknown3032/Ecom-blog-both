@@ -2,12 +2,14 @@
 
 import React, { useRef } from 'react'
 import HeroBanner from './HeroBanner'
-import Wrapper from './Wrapper'
-import { VelocityScroll } from './ui/scroll-based-velocity'
-import GradualSpacing from "./ui/gradual-spacing";
 import { fadeIn } from '@/varient';
 import { useScroll, motion, useTransform } from 'framer-motion';
-import ProductSlider from './ProductSlider/ProductSlider'
+import Wrapper from '../Wrapper'
+import { VelocityScroll } from '../ui/scroll-based-velocity';
+import GradualSpacing from '../ui/gradual-spacing';
+import ProductSlider from '../ProductSlider/ProductSlider';
+import Categories from '../CategoriesUi/Categories';
+
 
 
 
@@ -24,7 +26,7 @@ const Home = () => {
     const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1])
 
     return (
-        <div className='h-[150vh]'>
+        <div className=''>
             <div>
                 <HeroBanner />
             </div>
@@ -57,6 +59,17 @@ const Home = () => {
 
                     <ProductSlider />
                 </div>
+
+                {/*First Category */}
+                <div className='mt-4'>
+                    <Categories />
+                </div>
+
+                {/* First Category  end */}
+                {/*First Category */}
+                <div className='mt-4'>
+                </div>
+                {/* First Category  end */}
 
 
 

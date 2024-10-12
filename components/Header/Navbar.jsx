@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from "react";
-import Wrapper from "./Wrapper";
 
 import Link from "next/link";
 import Menu from "./Menu";
@@ -13,6 +12,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import { AnimatePresence, motion } from "framer-motion";
 import { fadeIn } from "@/varient";
 import UserNavigation from "./UserNavigation";
+import Wrapper from "../Wrapper";
 
 
 

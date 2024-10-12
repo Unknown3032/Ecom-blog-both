@@ -4,7 +4,7 @@
 // import Swiper core and required modules
 import { Swiper, SwiperSlide, useSwiper, } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, Autoplay, EffectCreative, EffectFade } from 'swiper/modules';
-import { SwiperButtonNext, SwiperButtonPrev } from './swiper/SwiperButtonNext '
+import { SwiperButtonNext, SwiperButtonPrev } from '../swiper/SwiperButtonNext ';
 
 
 
@@ -36,12 +36,12 @@ const images = [
 
 const slideData = [
     {
-        img: "/slide4.webp",
+        img: "/slide-1.jpg",
         title: 'New Arrivals',
         desc: "It's The Standard",
     },
     {
-        img: "/slide5.webp",
+        img: "/slide4.webp",
         title: 'Best Seller',
         desc: "It's The Standard",
     }
