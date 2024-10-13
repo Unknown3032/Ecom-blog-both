@@ -41,7 +41,7 @@ const slideData = [
         desc: "It's The Standard",
     },
     {
-        img: "/slide4.webp",
+        img: "/slide6.webp",
         title: 'Best Seller',
         desc: "It's The Standard",
     }
@@ -73,7 +73,7 @@ export default function HeroBanner() {
                         modules={[Navigation, Pagination, Scrollbar, Autoplay, EffectFade]}
                         effect='fade'
                         autoplay={{
-                            delay: 3500,
+                            delay: 10000,
                             disableOnInteraction: false,
                         }}
                         loop={true}

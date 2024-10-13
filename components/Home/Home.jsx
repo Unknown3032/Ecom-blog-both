@@ -53,25 +53,68 @@ const Home = () => {
                     {/* heading  */}
                     <GradualSpacing
                         className=" select-none font-display text-left text-3xl font-bold -tracking-widest  text-white dark:text-white md:text-4xl md:leading-[5rem]"
-                        text="Latest Products"
+                        text="New Arrival"
                     />
                     {/* heading  end */}
 
-                    <ProductSlider />
+                    <ProductSlider section={"new arrival"} />
                 </div>
 
                 {/*First Category */}
                 <div className='mt-4'>
-                    <Categories />
+                    <Categories cat={'fashion'} />
                 </div>
-
                 {/* First Category  end */}
-                {/*First Category */}
+
+                {/* Best product section start  */}
                 <div className='mt-4'>
+                    {/* heading  */}
+                    <GradualSpacing
+                        className=" select-none font-display text-left text-3xl font-bold -tracking-widest  text-white dark:text-white md:text-4xl md:leading-[5rem]"
+                        text="Best Sellers"
+                    />
+                    {/* heading  end */}
+                    <ProductSlider section={"best seller"} />
                 </div>
-                {/* First Category  end */}
 
 
+                {/*Mug Category */}
+                <div className='mt-4'>
+                    <Categories cat={'mug'} />
+                </div>
+                {/* Mug Category  end */}
+
+                {/* Mugs section start  */}
+                <div className='mt-4'>
+                    {/* heading  */}
+                    <GradualSpacing
+                        className=" select-none font-display text-left text-3xl font-bold -tracking-widest  text-white dark:text-white md:text-4xl md:leading-[5rem]"
+                        text="New Mugs"
+                    />
+                    {/* heading  end */}
+                    <ProductSlider section={"Mugs"} />
+                </div>
+
+                {/*Frame Category */}
+                <div className='mt-4'>
+                    <Categories cat={'poster'} />
+                </div>
+                {/* frame Category  end */}
+
+                {/* Frame section start  */}
+                <div className='mt-4'>
+                    {/* heading  */}
+                    <GradualSpacing
+                        className=" select-none font-display text-left text-3xl font-bold -tracking-widest  text-white dark:text-white md:text-4xl md:leading-[5rem]"
+                        text="New Frames"
+                    />
+                    {/* heading  end */}
+                    <ProductSlider section={"Frame"} />
+                </div>
+
+                <div className='my-6'>
+
+                </div>
 
             </Wrapper>
 
