@@ -31,18 +31,18 @@ const Categories = ({ cat }) => {
             <div className='grid md:grid-cols-3 grid-cols-1 gap-4  place-items-center '>
                 {cat == 'fashion' ? categories?.map((data, i) => {
 
-                    return <FadeInWhenVisible >
-                        <CategoryCard key={i} data={data} />
+                    return <FadeInWhenVisible key={i} >
+                        <CategoryCard data={data} />
                     </FadeInWhenVisible>
                 })
                     :
                     cat == 'mug' ? mugCategories?.map((data, i) => {
-                        return <FadeInWhenVisible >
-                            <CategoryCard key={i} data={data} />
+                        return <FadeInWhenVisible key={i} >
+                            <CategoryCard data={data} />
                         </FadeInWhenVisible>
                     }) :
                         posterCategories?.map((data, i) => {
-                            return <FadeInWhenVisible >
+                            return <FadeInWhenVisible key={i} >
                                 <CategoryCard key={i} data={data} />
                             </FadeInWhenVisible>
                         })
