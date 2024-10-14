@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { BsChevronDown } from "react-icons/bs";
+import MegaMenu from "./MegaMenu";
 
 const data = [
     { id: 1, name: "Home", url: "/" },
-    { id: 2, name: "Shop", url: "/products" },
-    { id: 3, name: "Categories", subMenu: true },
+    { id: 3, name: "Clothes", subMenu: true },
+    { id: 2, name: "Accessories", subMenu: true },
     { id: 4, name: "Blog", url: "/blog" },
 ];
 
@@ -16,53 +17,29 @@ const subMenuData = [
     { id: 4, name: "keychain", doc_count: 107 },
 ];
 
-const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
+const Menu = ({ showCatMenu, setShowCatMenu, categories, setMegaMenu, megaMenu }) => {
     return (
         <ul className="hidden md:flex items-center gap-8 font-medium text-white">
             {data.map((item) => {
+                if (item.subMenu) {
+                    return (
+                        <React.Fragment key={item.id}>
+                            <li
+                                onMouseEnter={() => setMegaMenu([true, item?.name])}
+                                className="cursor-pointer hover:text-white/80 transition-all duration-300">
+                                {item.name}
+                            </li>
+                        </React.Fragment>)
+                }
                 return (
                     <React.Fragment key={item.id}>
-                        {!!item?.subMenu ? (
-                            <li
-                                className="cursor-pointer flex items-center gap-2 relative hover:text-white/80 transition-all duration-300 "
-                                onMouseEnter={() => setShowCatMenu(true)}
-                                onMouseLeave={() => setShowCatMenu(false)}
-                            >
-                                {item.name}
-                                <BsChevronDown size={14} />
-                                {/* dropdown */}
-                                {showCatMenu && (
-                                    <div className="w-56 bg-bgblack rounded shadow-md absolute top-4
-                                    left-1/2 transform -translate-x-1/2 z-10 py-7
-                                    overflow-hidden mt-2">
-                                        {categories?.length === 0 ? (
-                                            <p>Loading...</p>
-                                        ) : (
-                                            <ul className="text-sm divide-y text-white">
-                                                {subMenuData.map((catItem) => (
-                                                    <Link href={`/category/${catItem.name}`} key={`${item.id}-${catItem.id}`}>
-                                                        <li
-                                                            onClick={() => setShowCatMenu(false)}
-                                                            className="px-4 py-2 hover:bg-white/20
-                                                        transition duration-150 ease-in-out"
-                                                        >
-                                                            {`${item.name}: ${catItem.name.toUpperCase()} `}
-                                                        </li>
-                                                    </Link>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                )}
-                            </li>
-                        ) : (
-                            <li className="cursor-pointer hover:text-white/80 transition-all duration-300">
-                                <Link href={item?.url}>{item.name}</Link>
-                            </li>
-                        )}
+                        <li className="cursor-pointer hover:text-white/80 transition-all duration-300">
+                            <Link href={'/'}>{item.name}</Link>
+                        </li>
                     </React.Fragment>
                 );
             })}
+
         </ul>
     );
 };

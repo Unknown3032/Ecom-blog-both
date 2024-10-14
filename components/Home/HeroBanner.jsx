@@ -55,17 +55,10 @@ export default function HeroBanner() {
         <>
             <div className='relative min-h-screen md:min-h-[102vh] select-none overflow-hidden md:-mt-[80px] -mt-[60px] text-white antialiased top-0 bg-white/20 '>
                 <motion.div
-                    variants={fadeIn(0.1, 0.5)}
-                    initial={{
-                        opacity: 0,
-                    }}
-                    animate='show'
-                    exit='hidden'
-                    whileInView={{
-                        opacity: 1,
-                    }}
-                    viewport={{
-                        amount: "all"
+                    initial={{ opacity: 0, scale: 1.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.5
                     }}
                 >
                     <Swiper

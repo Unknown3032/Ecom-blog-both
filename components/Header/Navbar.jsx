@@ -13,6 +13,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { fadeIn } from "@/varient";
 import UserNavigation from "./UserNavigation";
 import Wrapper from "../Wrapper";
+import MegaMenu from "./MegaMenu";
+import MegamenuMoblie from "./MegamenuMoblie";
 
 
 
@@ -27,6 +29,7 @@ const Navbar = ({ setUser, user }) => {
     const [searchOpen, setSearchOpen] = useState(false)
     const [background, setBackground] = useState("bg-transparent ")
     const [searchHeight, setSearchHeight] = useState(80)
+    const [megaMenu, setMegaMenu] = useState([false, 'Clothes'])
     // console.log(user);
 
     // console.log(user.data.profile_img);
@@ -83,7 +86,7 @@ const Navbar = ({ setUser, user }) => {
         <>
 
             <header
-                className={`w-full h-[60px] md:h-[70px] ${!mobileMenu ? background : "bg-bgblack"} flex items-center  justify-between z-40 top-0  duration-300 shadow-sm ${show} py-2 transition-all sticky  duration-300 hover:bg-black `}
+                className={`w-full h-[60px] md:h-[70px] ${mobileMenu || searchOpen ? "bg-bgblack" : background} flex items-center  justify-between z-40 top-0  duration-300 shadow-sm ${show} py-2 transition-all sticky  duration-300 hover:bg-black `}
             >
                 <Wrapper className="h-[70px] flex justify-between items-center">
                     <Link href="/">
@@ -94,9 +97,11 @@ const Navbar = ({ setUser, user }) => {
                         showCatMenu={showCatMenu}
                         setShowCatMenu={setShowCatMenu}
                         categories={categories}
+                        setMegaMenu={setMegaMenu}
+                        megaMenu={megaMenu}
                     />
                     {/* menu for mobile  */}
-                    <AnimatePresence>
+                    {/* <AnimatePresence>
                         {mobileMenu && (
                             <motion.div
                                 variants={fadeIn('left', 0.1, 0.5)}
@@ -115,7 +120,7 @@ const Navbar = ({ setUser, user }) => {
                             </motion.div>
 
                         )}
-                    </AnimatePresence>
+                    </AnimatePresence> */}
 
                     {/* icons  */}
                     <div className="flex items-center gap-2 text-[#eeeeee]">
@@ -179,9 +184,9 @@ const Navbar = ({ setUser, user }) => {
 
                 </Wrapper>
                 {/* search start  */}
-                {searchOpen && <div className={`w-full flex justify-around items-center z-50 md:mt-[152.5px] mt-[140.5px] bg-white h-20 absolute`}>
+                {searchOpen && <div className={`w-full text-white flex justify-around items-center z-50 md:mt-[152px] mt-[140.5px] bg-bgblack h-20 absolute`}>
                     <div className='w-[80vw] border border-gray-200 rounded-md'>
-                        <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+                        <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-bgblack overflow-hidden">
                             <div className="grid place-items-center h-full w-12 text-gray-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -189,7 +194,7 @@ const Navbar = ({ setUser, user }) => {
                             </div>
 
                             <input
-                                className="peer w-full outline-none text-sm text-gray-700 pr-2"
+                                className="peer w-full outline-none text-sm text-gray-700 pr-2 bg-bgblack"
                                 type="text"
                                 id="search"
                                 placeholder="Search something.." />
@@ -205,6 +210,9 @@ const Navbar = ({ setUser, user }) => {
                 </div>}
                 {/* search end */}
                 <hr className=' absolute h-[0.01vh] w-full text-white/20 bg-white/20 md:mt-[70px] mt-[60px]' />
+                {megaMenu[0] && <MegaMenu megaMenu={megaMenu} setMegaMenu={setMegaMenu} />}
+
+                {mobileMenu && <MegamenuMoblie setMobileMenu={setMobileMenu} mobileMenu={mobileMenu} />}
             </header>
 
         </>
