@@ -13,6 +13,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-fade';
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
 
 
 
@@ -25,7 +26,7 @@ const featured = [
 ]
 
 const Products = [
-    { name: "All Products", img: "", url: "" },
+    { name: "All Products", img: "", url: "/productsPage/clothes" },
     { name: "Fit T-Shirt", img: "", url: "" },
     { name: "Full Slive", img: "", url: "" },
     { name: "Hoodies", img: "", url: "" },
@@ -42,7 +43,7 @@ const accessfeatured = [
 ]
 
 const accessProducts = [
-    { name: "All Products", img: "", url: "" },
+    { name: "All Products", img: "", url: "/productsPage/accessories" },
     { name: "Frames", img: "", url: "" },
     { name: "Mugs", img: "", url: "" },
     { name: "Rings", img: "", url: "" },
@@ -72,7 +73,7 @@ const MegamenuMoblie = ({ mobileMenu, setMobileMenu }) => {
                     transition={{ duration: 0.3 }}
                     onMouseLeave={() => { setMobileMenu(false) }}
                     onKeyDown={() => { setMobileMenu(false) }}
-                    className='absolute md:hidden top-[18vh] text-white h-screen bg-black w-full rounded-t-3xl '>
+                    className='absolute select-none md:hidden top-[18vh] text-white h-screen bg-black w-full rounded-t-3xl '>
                     <Wrapper>
                         <div className='mt-5  grid grid-rows-2 h-[75vh] w-full gap-3'>
                             {/* toggele */}
@@ -101,10 +102,16 @@ const MegamenuMoblie = ({ mobileMenu, setMobileMenu }) => {
                                         <ul className='font-crimson mt-2'>
                                             {sliderHr == "Clothes" ?
                                                 featured?.map((item, i) => {
-                                                    return <li key={i} className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    return <Link
+                                                        onClick={() => { setMobileMenu(false) }}
+                                                        key={i} href={item?.url}> <li className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    </Link>
                                                 }) :
                                                 accessfeatured?.map((item, i) => {
-                                                    return <li key={i} className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    return <Link
+                                                        onClick={() => { setMobileMenu(false) }}
+                                                        key={i} href={item?.url}><li className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    </Link>
                                                 })
                                             }
                                         </ul>
@@ -116,10 +123,16 @@ const MegamenuMoblie = ({ mobileMenu, setMobileMenu }) => {
                                         <ul className='font-crimson mt-2'>
                                             {sliderHr == "Clothes" ?
                                                 Products?.map((item, i) => {
-                                                    return <li key={i} className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    return <Link
+                                                        onClick={() => { setMobileMenu(false) }}
+                                                        key={i} href={item?.url}><li className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    </Link>
                                                 }) :
                                                 accessProducts?.map((item, i) => {
-                                                    return <li key={i} className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    return <Link
+                                                        onClick={() => { setMobileMenu(false) }}
+                                                        key={i} href={item?.url}><li className='text-white/90 font-semibold hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300 text-lg pt-1'>{item?.name}</li>
+                                                    </Link>
                                                 })
                                             }
                                         </ul>

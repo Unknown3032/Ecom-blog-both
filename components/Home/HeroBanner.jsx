@@ -29,27 +29,9 @@ import { fadeIn } from '@/varient';
 
 
 
-const images = [
-    "/slide2.webp",
-    "/slide3.webp",
-]
-
-const slideData = [
-    {
-        img: "/slide-1.jpg",
-        title: 'New Arrivals',
-        desc: "It's The Standard",
-    },
-    {
-        img: "/slide6.webp",
-        title: 'Best Seller',
-        desc: "It's The Standard",
-    }
-]
 
 
-
-export default function HeroBanner() {
+export default function HeroBanner({ slideData, loop }) {
 
     return (
         <>
@@ -58,7 +40,7 @@ export default function HeroBanner() {
                     initial={{ opacity: 0, scale: 1.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
-                        duration: 0.5
+                        duration: 0.8
                     }}
                 >
                     <Swiper
@@ -69,7 +51,7 @@ export default function HeroBanner() {
                             delay: 10000,
                             disableOnInteraction: false,
                         }}
-                        loop={true}
+                        loop={loop}
                         spaceBetween={0}
                         slidesPerView={1}
                     // onSlideChange={() => console.log('slide change')}

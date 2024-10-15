@@ -5,9 +5,9 @@ import MegaMenu from "./MegaMenu";
 
 const data = [
     { id: 1, name: "Home", url: "/" },
-    { id: 3, name: "Clothes", subMenu: true },
-    { id: 2, name: "Accessories", subMenu: true },
-    { id: 4, name: "Blog", url: "/blog" },
+    { id: 3, name: "Clothes", url: `/productsPage/clothes`, subMenu: true },
+    { id: 2, name: "Accessories", url: `/productsPage/accessories`, subMenu: true },
+    { id: 4, name: "Blogs", url: "/blog" },
 ];
 
 const subMenuData = [
@@ -25,9 +25,10 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories, setMegaMenu, megaMenu }
                     return (
                         <React.Fragment key={item.id}>
                             <li
+                                onClick={() => { setMegaMenu([false, item?.name]) }}
                                 onMouseEnter={() => setMegaMenu([true, item?.name])}
                                 className="cursor-pointer hover:text-white/80 transition-all duration-300">
-                                {item.name}
+                                <Link href={item?.url}>  {item.name}</Link>
                             </li>
                         </React.Fragment>)
                 }

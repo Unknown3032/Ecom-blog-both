@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import Wrapper from '../Wrapper'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 
 
 const featured = [
@@ -12,7 +13,7 @@ const featured = [
 ]
 
 const Products = [
-    { name: "All Products", img: "", url: "" },
+    { name: "All Products", img: "", url: "/productsPage/clothes" },
     { name: "Fit T-Shirt", img: "", url: "" },
     { name: "Full Slive", img: "", url: "" },
     { name: "Hoodies", img: "", url: "" },
@@ -29,7 +30,7 @@ const accessfeatured = [
 ]
 
 const accessProducts = [
-    { name: "All Products", img: "", url: "" },
+    { name: "All Products", img: "", url: "/productsPage/accessories" },
     { name: "Frames", img: "", url: "" },
     { name: "Mugs", img: "", url: "" },
     { name: "Key Chains", img: "", url: "" },
@@ -83,10 +84,16 @@ const MegaMenu = ({ megaMenu, setMegaMenu }) => {
                                 <h2 className='px-2'>Products</h2>
                                 <ul className='font-crimson mt-2'>
                                     {megaMenu[1] == "Clothes" ? Products?.map((item, i) => {
-                                        return <li key={i} className='text-white/90 hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300'>{item?.name}</li>
+                                        return <Link
+                                            onClick={() => { setMegaMenu([false, megaMenu[1]]) }}
+                                            key={i} href={item?.url}><li className='text-white/90 hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300'>{item?.name}</li>
+                                        </Link>
                                     }) :
                                         accessProducts?.map((item, i) => {
-                                            return <li key={i} className='text-white/90 hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300'>{item?.name}</li>
+                                            return <Link
+                                                onClick={() => { setMegaMenu([false, megaMenu[1]]) }}
+                                                key={i} href={item?.url}><li className='text-white/90 hover:bg-dark-grey cursor-pointer px-2 rounded-lg transition-all duration-300'>{item?.name}</li>
+                                            </Link>
                                         })
                                     }
                                 </ul>
