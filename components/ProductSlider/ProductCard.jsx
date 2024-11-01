@@ -28,7 +28,7 @@ const ProductCard = ({ product, css, csstext }) => {
 
     return (
         <FadeInWhenVisible>
-            <div className='flex'>
+            <div className='flex select-none'>
                 <div className='flex flex-col gap-2 w-full '>
 
                     {/* images start  */}
