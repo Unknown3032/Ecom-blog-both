@@ -15,6 +15,7 @@ import UserNavigation from "./UserNavigation";
 import Wrapper from "../Wrapper";
 import MegaMenu from "./MegaMenu";
 import MegamenuMoblie from "./MegamenuMoblie";
+import Login from "../Authentication/Login";
 
 
 
@@ -30,6 +31,9 @@ const Navbar = ({ setUser, user }) => {
     const [background, setBackground] = useState("bg-transparent ")
     const [searchHeight, setSearchHeight] = useState(80)
     const [megaMenu, setMegaMenu] = useState([false, 'Clothes'])
+
+
+    const [activeLogin, setActiveLogin] = useState(false)
     // console.log(user);
 
     // console.log(user.data.profile_img);
@@ -100,27 +104,7 @@ const Navbar = ({ setUser, user }) => {
                         setMegaMenu={setMegaMenu}
                         megaMenu={megaMenu}
                     />
-                    {/* menu for mobile  */}
-                    {/* <AnimatePresence>
-                        {mobileMenu && (
-                            <motion.div
-                                variants={fadeIn('left', 0.1, 0.5)}
-                                initial='hidden'
-                                animate='show'
-                                exit='hidden'
-                                className="flex flex-col md:hidden  font-bold absolute top-[58px] left-0 w-full h-[calc(100vh-50px)] bg-black border-t text-white"
-                            >
-                                <MenuMobile
-                                    showCatMenu={showCatMenu}
-                                    setShowCatMenu={setShowCatMenu}
-                                    setMobileMenu={setMobileMenu}
-                                    categories={categories}
-                                    mobileMenu={mobileMenu}
-                                />
-                            </motion.div>
 
-                        )}
-                    </AnimatePresence> */}
 
                     {/* icons  */}
                     <div className="flex items-center gap-2 text-[#eeeeee]">
@@ -143,27 +127,11 @@ const Navbar = ({ setUser, user }) => {
                         </Link>
 
                         {/* Icon end */}
-
-                        {!user ? <div className="group w-8 md:w-12 h-8 md:h-12 rounded-full flex flex-col justify-center items-center hover:bg-white/20 cursor-pointer relative ">
-                            <Link href={'/signIn'}>
-                                <IoLogInOutline className="text-[19px] md:text-[24px]" />
-                            </Link>
-                        </div> :
-                            <div className='relative'
-                                onMouseEnter={() => setUserNavigate(true)}
-                                onMouseLeave={() => setUserNavigate(false)}
-                                onClick={() => setUserNavigate(!userNavigate)}
-                            >
-                                <button className='md:w-8 md:h-8 w-7 h-7 mt-1'>
-                                    <img className='w-full h-full rounded-full object-cover' src={user?.data?.data?.profile_img} alt='profile' />
-                                </button>
-                                {
-                                    userNavigate ?
-                                        <UserNavigation user={user} setUser={setUser} /> :
-                                        ""
-                                }
-                            </div>
-                        }
+                        <div className="group w-8 md:w-12 h-8 md:h-12 rounded-full flex flex-col justify-center items-center hover:bg-white/20 cursor-pointer relative ">
+                            {/* <Link href={'/signIn'}> */}
+                            <Login activeLogin={activeLogin} setActiveLogin={setActiveLogin} />
+                            {/* </Link> */}
+                        </div>
 
                         {/* Mobile icon start */}
                         <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center transition-all duration-200 hover:bg-white/20 cursor-pointer relative -mr-2">
@@ -214,6 +182,9 @@ const Navbar = ({ setUser, user }) => {
 
                 {mobileMenu && <MegamenuMoblie setMobileMenu={setMobileMenu} mobileMenu={mobileMenu} />}
             </header>
+
+            {/* login modal  */}
+
 
         </>
     );

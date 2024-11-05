@@ -9,6 +9,7 @@ import { VelocityScroll } from '../ui/scroll-based-velocity';
 import GradualSpacing from '../ui/gradual-spacing';
 import ProductSlider from '../ProductSlider/ProductSlider';
 import Categories from '../CategoriesUi/Categories';
+import Login from '../Authentication/Login';
 
 
 
@@ -126,6 +127,7 @@ const Home = () => {
 
     return (
         <div className=''>
+
             <div>
                 <HeroBanner slideData={slideData} loop={true} />
             </div>
@@ -216,6 +218,7 @@ const Home = () => {
                 </div>
 
             </Wrapper>
+
 
         </div>
     )
