@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-fade';
+import Link from 'next/link';
 
 
 
@@ -52,7 +53,9 @@ const ProductSlider = ({ slides }) => {
                 {slides?.map((slide, i) => {
                     return <SwiperSlide key={i}>
                         <div >
-                            <ProductCard css={'lg:w-[17.8vw] md:w-[29vw] w-[45vw] '} csstext={'lg:max-w-[18vw] lg:w-[17.8vw] md:w-[29vw] w-[42vw]'} product={slide} />
+                            <Link href={`/productpage/${slide?.title}`}>
+                                <ProductCard css={'lg:w-[17.8vw] md:w-[29vw] w-[45vw] '} csstext={'lg:max-w-[18vw] lg:w-[17.8vw] md:w-[29vw] w-[42vw]'} product={slide} />
+                            </Link>
                         </div>
                     </SwiperSlide>
                 })}

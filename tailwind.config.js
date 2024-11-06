@@ -98,5 +98,21 @@ module.exports = {
 		}
 	},
 	darkMode: "class",
-	plugins: [nextui()],
+	plugins: [
+		nextui(),
+		function ({ addUtilities }) {
+			const newUtilities = {
+				".noScrollbar::-webkit-scrollbar": {
+					display: 'none'
+				},
+				".noScrollbar": {
+					"-ms-overflow-style": "none",
+					"scrollbar-width": "none"
+				}
+			}
+
+			addUtilities(newUtilities)
+		}
+
+	],
 };

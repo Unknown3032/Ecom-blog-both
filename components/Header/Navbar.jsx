@@ -9,13 +9,19 @@ import { BsCart, BsSearch } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
 import { IoLogInOutline } from "react-icons/io5";
 import { VscChromeClose } from "react-icons/vsc";
+import { IoBagOutline } from "react-icons/io5";
+
 import { AnimatePresence, motion } from "framer-motion";
+
+
+
 import { fadeIn } from "@/varient";
 import UserNavigation from "./UserNavigation";
 import Wrapper from "../Wrapper";
 import MegaMenu from "./MegaMenu";
 import MegamenuMoblie from "./MegamenuMoblie";
 import Login from "../Authentication/Login";
+import CustomBatch from "../CustomBatch";
 
 
 
@@ -116,14 +122,10 @@ const Navbar = ({ setUser, user }) => {
                         </div>
 
                         <Link href="/cart">
-                            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative">
-                                <BsCart className="text-[15px] md:text-[20px]" />
-                                {cartItems && Object.keys(cartItems)?.length > 0 &&
-                                    <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                                        {Object.keys(cartItems)?.length}
-                                    </div>
-                                }
-                            </div>
+                            {/* <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-white/20 cursor-pointer relative"> */}
+                            {/* <IoBagOutline className="text-[15px] md:text-[20px]" /> */}
+                            <CustomBatch icon={IoBagOutline} notifiactionCount={33} />
+                            {/* </div> */}
                         </Link>
 
                         {/* Icon end */}

@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply text-foreground bg-bgblack;
+    @apply text-foreground bg-bgblack noScrollbar;
   }
 
   h1 {
