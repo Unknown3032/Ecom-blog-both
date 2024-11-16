@@ -2,15 +2,14 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 
 // icons 
-import { RiShieldUserLine } from "react-icons/ri";
-import { IoCardSharp } from "react-icons/io5";
-import { MdEditDocument } from "react-icons/md";
+import { CiCreditCard1, CiUser, CiLogout } from "react-icons/ci";
+import { removeFromSession } from '@/common/SessionFunc';
 
-const UserNavigation = ({ user, setUser }) => {
+const UserNavigation = ({ setUserAuth }) => {
 
     const handleSignOut = () => {
-        localStorage.removeItem("user")
-        setUser(null)
+        removeFromSession("user")
+        setUserAuth({ token: null })
     }
 
     return (
@@ -18,33 +17,27 @@ const UserNavigation = ({ user, setUser }) => {
             className='absolute right-0 z-50'
         >
 
-            <div className='bg-white absolute right-0 border border-grey w-60 duration-200'>
-                <Link href={`/myaccount`} className='flex link items-center gap-2 pl-8 py-4' >
-                    <RiShieldUserLine className='text-2xl' />
-                    <p>My Account</p>
+            <div className='bg-bgblack absolute right-0 border border-grey/55 w-60 duration-200 rounded-md'>
+                <Link href={`/myaccount`} className='flex link items-center gap-2 pl-8 py-3 transition-all duration-200 hover:bg-dark-grey' >
+                    <CiUser className='font-bold text-xl text-white' />
+                    <h2 className='font-normal text-lg'>My Account</h2>
                 </Link>
 
-                <Link href={`/myorders`} className='flex link items-center gap-2 pl-8 py-4' >
-                    <IoCardSharp className='text-2xl' />
-                    <p>Orders</p>
+                <Link href={`/myorders`} className='flex link items-center gap-2 pl-8 py-3 transition-all duration-200 hover:bg-dark-grey' >
+                    <CiCreditCard1 className='font-bold text-xl text-white' />
+                    <h2 className='font-normal text-lg'>Orders</h2>
                 </Link>
 
-                <Link href={`/createBlog`} className='flex link items-center gap-2 pl-8 py-4' >
-                    <MdEditDocument className='text-2xl' />
-                    <p>Write</p>
-                </Link>
 
-                {/* <Link href={`/`} className='flex link items-center gap-2 pl-8 py-4' >
-                    <GoGear className='text-2xl' />
-                    <p>Settings</p>
-                </Link> */}
 
-                <span className='absolute border-t border-grey w-full pl-8 py-4'></span>
+                <span className='absolute border-t border-grey/55 w-full  cursor-pointer
+                 hover:bg-dark-grey'
+                ></span>
                 <button
                     onClick={handleSignOut}
-                    className='text-left p-4 py-4 pl-8 w-full hover:bg-grey'>
-                    <h1 className='font-bold text-xl mb-1'>Signout</h1>
-                    <p className='text-dark-grey'>@{user?.data?.data.username}</p>
+                    className=' flex link gap-2  justify-center items-center  py-2 transition-all duration-200 hover:bg-dark-grey w-full'>
+                    <CiLogout className='font-bold text-xl -ml-2 text-white' />
+                    <h2 className='text-white py-2 text-lg'>Signout</h2>
                 </button>
 
             </div>

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import Link from "next/link";
 import Menu from "./Menu";
@@ -22,10 +22,11 @@ import MegaMenu from "./MegaMenu";
 import MegamenuMoblie from "./MegamenuMoblie";
 import Login from "../Authentication/Login";
 import CustomBatch from "../CustomBatch";
+import { UserContext } from "@/app/layout";
 
 
 
-const Navbar = ({ setUser, user }) => {
+const Navbar = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [showCatMenu, setShowCatMenu] = useState(false);
     const [show, setShow] = useState("translate-y-0");
@@ -38,6 +39,7 @@ const Navbar = ({ setUser, user }) => {
     const [searchHeight, setSearchHeight] = useState(80)
     const [megaMenu, setMegaMenu] = useState([false, 'Clothes'])
 
+    let { setUserAuth, userAuth: { token, profile_img }, activeUserAuth, userAuth } = useContext(UserContext)
 
     const [activeLogin, setActiveLogin] = useState(false)
     // console.log(user);
@@ -80,10 +82,10 @@ const Navbar = ({ setUser, user }) => {
         };
     }, [lastScrollY]);
 
+
     useEffect(() => {
         setCartItems(JSON.parse(localStorage.getItem("cart")))
-
-    }, [])
+    }, [userAuth])
 
     const handleSearch = () => {
         setSearchOpen(!searchOpen)
@@ -129,11 +131,28 @@ const Navbar = ({ setUser, user }) => {
                         </Link>
 
                         {/* Icon end */}
-                        <div className="group w-8 md:w-12 h-8 md:h-12 rounded-full flex flex-col justify-center items-center hover:bg-white/20 cursor-pointer relative ">
+                        {!token ? <div className="group w-8 md:w-12 h-8 md:h-12 rounded-full flex flex-col justify-center items-center hover:bg-white/20 cursor-pointer relative ">
                             {/* <Link href={'/signIn'}> */}
                             <Login activeLogin={activeLogin} setActiveLogin={setActiveLogin} />
                             {/* </Link> */}
-                        </div>
+                        </div> :
+                            <>
+                                <div className='relative '
+                                    onMouseEnter={() => setUserNavigate(true)}
+                                    onMouseLeave={() => setUserNavigate(false)}
+                                    onClick={() => setUserNavigate(!userNavigate)}
+                                >
+                                    <button className='w-12 h-12 mt-1 bg-white/20 rounded-full'>
+                                        <img className='w-full h-full rounded-full object-cover' src={profile_img} alt='profile' />
+                                    </button>
+                                    {
+                                        userNavigate ?
+                                            <UserNavigation setUserAuth={setUserAuth} /> :
+                                            ""
+                                    }
+                                </div>
+                            </>
+                        }
 
                         {/* Mobile icon start */}
                         <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center transition-all duration-200 hover:bg-white/20 cursor-pointer relative -mr-2">
