@@ -70,7 +70,7 @@ export default function HeroBanner({ slideData, loop }) {
                             slideData?.map((slide, i) => {
                                 return <SwiperSlide key={i}>
                                     <>
-                                        <img className=' min-h-screen  md:min-h-[102vh] object-cover brightness-90 grayscale-5' src={slide?.img} alt={slide?.title} />
+                                        <img className=' min-h-screen  md:h-[101vh] object-cover brightness-90 grayscale-5' src={slide?.img} alt={slide?.title} />
                                         {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" /> */}
                                         <motion.div
                                             key={slide?.title}
