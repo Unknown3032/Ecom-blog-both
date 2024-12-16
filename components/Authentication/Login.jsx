@@ -71,7 +71,7 @@ export default function Login({ activeLogin, setActiveLogin }) {
             password: passwordVal
         }
 
-        await axios.post(process.env.NEXT_PUBLIC_URL + "/api/signin", formData).then(({ data }) => {
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/signin", formData).then(({ data }) => {
 
 
             // set crendential confirm 
