@@ -143,6 +143,8 @@ export default function Login({ activeLogin, setActiveLogin }) {
             setEmailValSignup('')
             setPasswordValSignup('')
             setPasswordValSignupConfirm('')
+            setActiveLogin(!activeLogin);
+
             // setActiveLogin(!activeLogin);
         }).catch(({ response }) => {
             let resError = response?.data?.data?.error;
@@ -151,7 +153,7 @@ export default function Login({ activeLogin, setActiveLogin }) {
             setEmailValSignup('')
             setPasswordValSignup('')
             setPasswordValSignupConfirm('')
-            console.log(response);
+            // console.log(response);
 
         })
 

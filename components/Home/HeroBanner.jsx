@@ -19,19 +19,13 @@ import 'swiper/css/effect-fade';
 
 
 // icons 
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+
 
 
 import { useScroll, motion, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { fadeIn } from '@/varient';
 
 
-
-
-
-
-export default function HeroBanner({ slideData, loop }) {
+export default function HeroBanner({ slideData, loop, }) {
 
     return (
         <>
@@ -67,10 +61,11 @@ export default function HeroBanner({ slideData, loop }) {
                         </SwiperButtonPrev> */}
 
                         {
-                            slideData?.map((slide, i) => {
+                            Object.keys(slideData)?.map((itrator, i) => {
+                                let slide = slideData[itrator]?.img_info
                                 return <SwiperSlide key={i}>
                                     <>
-                                        <img className=' min-h-screen  md:h-[101vh] object-cover brightness-90 md:w-screen grayscale-5' src={slide?.img} alt={slide?.title} />
+                                        <img className=' min-h-screen  md:h-[101vh] object-cover brightness-90 md:w-screen grayscale-5' src={slide?.url} alt={slide?.title} />
                                         {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" /> */}
                                         <motion.div
                                             key={slide?.title}

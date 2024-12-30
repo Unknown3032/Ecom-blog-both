@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import HeroBanner from './HeroBanner'
 import { useScroll, motion, useTransform } from 'framer-motion';
 import Wrapper from '../Wrapper'
@@ -8,22 +8,23 @@ import { VelocityScroll } from '../ui/scroll-based-velocity';
 import GradualSpacing from '../ui/gradual-spacing';
 import ProductSlider from '../ProductSlider/ProductSlider';
 import Categories from '../CategoriesUi/Categories';
+import axios from 'axios';
 
 
 
 
-const slideData = [
-    {
-        img: "/slide-1.jpg",
-        title: 'New Arrivals',
-        desc: "It's The Standard",
-    },
-    {
-        img: "/slide6.webp",
-        title: 'Best Seller',
-        desc: "It's The Standard",
-    }
-]
+// const slideData1 = [
+//     {
+//         url: "/slide-1.jpg",
+//         title: 'New Arrivals',
+//         desc: "It's The Standard",
+//     },
+//     {
+//         url: "/slide6.webp",
+//         title: 'Best Seller',
+//         desc: "It's The Standard",
+//     }
+// ]
 
 const productSlides = [
     { images: ['/collection-accesorios-bottom.jpg', '/collection-accesorios-top.jpg'], title: 'Ghost White T-shirt', desc: "It's a Ghost Outfit", colors: [{ white: '/collection-accesorios-bottom.jpg' }, { black: 'collection-accesorios-top.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 599 },
@@ -114,6 +115,7 @@ const posterCategories = [
 
 const Home = () => {
     const autoTextRef = useRef(null)
+    const [slideData, setSlideData] = useState({})
 
     const { scrollYProgress } = useScroll({
         delay: 0.5,
@@ -121,6 +123,33 @@ const Home = () => {
         offset: ["0 1", "1.33 1"]
     })
 
+
+
+
+
+    // get banners 
+    const getBanners = async () => {
+        let cat = {
+            "category": "home"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getBanner", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setSlideData(images);
+            // console.log(slideData);
+
+            // console.log(images);
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    useEffect(() => {
+        if (!slideData?.length) {
+            getBanners()
+        }
+        // console.log(!slideData?.length);
+
+    }, [])
 
 
     const scalProgress = useTransform(scrollYProgress, [0, 1], [0.85, 1])
