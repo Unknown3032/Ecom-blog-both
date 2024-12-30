@@ -35,7 +35,7 @@ export default function HeroBanner({ slideData, loop }) {
 
     return (
         <>
-            <div className='relative min-h-screen md:min-h-[102vh] select-none overflow-hidden md:-mt-[80px] -mt-[60px] text-white antialiased top-0 bg-white/20 '>
+            <div className='relative min-h-screen md:h-[100vh] select-none overflow-hidden md:-mt-[80px] -mt-[60px] text-white antialiased top-0 bg-white/20 md:w-screen'>
                 <motion.div
                     initial={{ opacity: 0, scale: 1.5 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -70,7 +70,7 @@ export default function HeroBanner({ slideData, loop }) {
                             slideData?.map((slide, i) => {
                                 return <SwiperSlide key={i}>
                                     <>
-                                        <img className=' min-h-screen  md:h-[101vh] object-cover brightness-90 grayscale-5' src={slide?.img} alt={slide?.title} />
+                                        <img className=' min-h-screen  md:h-[101vh] object-cover brightness-90 md:w-screen grayscale-5' src={slide?.img} alt={slide?.title} />
                                         {/* <img className='md:hidden min-h-screen object-cover brightness-90' src="/MOBILESLIDE1.webp" alt="" srcSet="" /> */}
                                         <motion.div
                                             key={slide?.title}

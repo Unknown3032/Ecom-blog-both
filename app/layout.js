@@ -42,7 +42,6 @@ export default function RootLayout({ children }) {
     if (userInSession) {
       setUserAuth(JSON.parse(userInSession))
       setActiveUserAuth(true)
-
     }
     else {
       setUserAuth({ token: null })
