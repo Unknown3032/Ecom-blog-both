@@ -94,28 +94,14 @@ const frameSlides = [
 
 ]
 
-const categories = [
-    { id: 1, name: 'T-Shirts', url: '', img: '/productos-remera-ojos-negra-2.jpg', title: 'T-shirt', desc: 'Wear Class' },
-    { id: 2, name: 'Mugs', url: '', img: '/productos-hoodie-de-gira-blanco-2.jpg', title: 'Hoddie', desc: 'Winter Arc' },
-    { id: 3, name: "Posters", url: '', img: '/collection-accesorios-bottom.jpg', title: 'Cap', desc: 'Cool Caps' },
-]
-
-const mugCategories = [
-    { id: 1, name: 'One Piece', url: '', img: '/cat-mug-1.jpg', title: 'One Piece', desc: 'Dream Comes True' },
-    { id: 2, name: 'Aot', url: '', img: '/cat-mug-2.jpg', title: 'Aot', desc: 'Nothing is permanent' },
-    { id: 3, name: "Naruto", url: '', img: '/cat-mug-3.jpg', title: 'Naruto', desc: 'Never give Up' },
-]
-
-const posterCategories = [
-    { id: 1, name: 'Sanatan', url: '', img: '/frame-cat-1.jpg', title: 'Sanatan', desc: 'Peace of Mind ' },
-    { id: 2, name: 'Anime', url: '', img: '/frame-cat-3.jpg', title: 'Motivational', desc: 'Never give Up' },
-    { id: 1, name: 'One Piece', url: '', img: '/cat-mug-1.jpg', title: 'One Piece', desc: 'Dream Comes True' },
-]
-
 
 const Home = () => {
     const autoTextRef = useRef(null)
     const [slideData, setSlideData] = useState({})
+    const [mugData, setMugData] = useState({})
+    const [posterData, setPosterData] = useState({})
+    const [clothesData, setClothesData] = useState({})
+
 
     const { scrollYProgress } = useScroll({
         delay: 0.5,
@@ -135,21 +121,75 @@ const Home = () => {
         await axios.post(process.env.NEXT_PUBLIC_URL + "api/getBanner", cat).then(({ data }) => {
             let images = data?.data?.imgs;
             setSlideData(images);
-            // console.log(slideData);
 
-            // console.log(images);
         }).catch(({ response }) => {
 
         })
     }
 
+
+    // get categories
+    const getCategoriesClothes = async () => {
+        let cat = {
+            "category": "clothes"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setClothesData(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getCategoriesAccessories = async () => {
+        let cat = {
+            "category": "accessories"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setMugData(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+    const getCategoriesAccessoriesFrames = async () => {
+        let cat = {
+            "category": "accessories-frame"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setPosterData(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+
+
     useEffect(() => {
         if (!slideData?.length) {
             getBanners()
         }
+
+        if (!clothesData?.length) {
+            getCategoriesClothes()
+        }
+
+        if (!mugData?.length) {
+            getCategoriesAccessories()
+
+        }
+
+        if (!posterData?.length) {
+            getCategoriesAccessoriesFrames()
+        }
         // console.log(!slideData?.length);
 
     }, [])
+
+
 
 
     const scalProgress = useTransform(scrollYProgress, [0, 1], [0.85, 1])
@@ -193,7 +233,7 @@ const Home = () => {
 
                 {/*First Category */}
                 <div className='mt-4'>
-                    <Categories slides={categories} cat={'fashion'} />
+                    <Categories slides={clothesData} cat={'fashion'} />
                 </div>
                 {/* First Category  end */}
 
@@ -211,7 +251,7 @@ const Home = () => {
 
                 {/*Mug Category */}
                 <div className='mt-4'>
-                    <Categories slides={mugCategories} cat={'mug'} />
+                    <Categories slides={mugData} cat={'mug'} />
                 </div>
                 {/* Mug Category  end */}
 
@@ -228,7 +268,7 @@ const Home = () => {
 
                 {/*Frame Category */}
                 <div className='mt-4'>
-                    <Categories slides={posterCategories} cat={'poster'} />
+                    <Categories slides={posterData} cat={'poster'} />
                 </div>
                 {/* frame Category  end */}
 

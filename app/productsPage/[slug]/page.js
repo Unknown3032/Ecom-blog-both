@@ -3,26 +3,27 @@
 import ProductSlider from '@/components/ProductSlider/ProductSlider'
 import HeroBanner from '@/components/Home/HeroBanner'
 import GradualSpacing from '@/components/ui/gradual-spacing'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Wrapper from '@/components/Wrapper'
 import Categories from '@/components/CategoriesUi/Categories'
+import axios from 'axios'
 
 
-const slideData = [
-    {
-        img: "/clothesTheme-1 (1).webp",
-        title: 'New Arrivals',
-        desc: "It's The Standard",
-    }
-]
+// const slideData = [
+//     {
+//         img: "/clothesTheme-1 (1).webp",
+//         title: 'New Arrivals',
+//         desc: "It's The Standard",
+//     }
+// ]
 
-const slideDataAccessories = [
-    {
-        img: "/mug-5-b.jpg",
-        title: 'New Arrivals',
-        desc: "It's The Standard",
-    }
-]
+// const slideDataAccessories = [
+//     {
+//         img: "/mug-5-b.jpg",
+//         title: 'New Arrivals',
+//         desc: "It's The Standard",
+//     }
+// ]
 
 // slides start 
 
@@ -93,40 +94,138 @@ const bestSellerAccessories = [
 
 // slides end 
 
-// categories start
-const clothesCategory = [
-    { id: 1, name: 'T-Shirts', url: '', img: '/productos-remera-ojos-negra-2.jpg', title: 'T-shirt', desc: 'Wear Class' },
-    { id: 2, name: 'Mugs', url: '', img: '/productos-hoodie-de-gira-blanco-2.jpg', title: 'Hoddie', desc: 'Winter Arc' },
-    { id: 3, name: "Posters", url: '', img: '/collection-accesorios-bottom.jpg', title: 'Cap', desc: 'Cool Caps' },
-]
 
-const clothesThemeCat = [
-    { id: 1, name: 'T-Shirts', url: '', img: '/clothesTheme-1 (1).webp', title: 'Anime', desc: 'Wear Class' },
-    { id: 2, name: 'Mugs', url: '', img: '/clothesTheme-1 (3).webp', title: 'Hinduism', desc: 'Wear Your Culture' },
-    { id: 3, name: "Posters", url: '', img: '/clothesTheme-1 (2).webp', title: 'Gym', desc: 'Wear Motive' },
-]
-
-const accessoriesCategory = [
-    { id: 1, name: 'One Piece', url: '', img: '/cat-mug-1.jpg', title: 'Mugs', desc: 'Coffe Mug' },
-    { id: 2, name: 'Sanatan', url: '', img: '/frame-cat-1.jpg', title: 'Frames', desc: 'High Quality' },
-    { id: 3, name: "Motivational", url: '', img: '/frame-cat-3.jpg', title: 'Keychains', desc: 'Set Of 4' },
-]
-
-const accessoriesThemeCategory = [
-    { id: 1, name: 'Sanatan', url: '', img: '/frame-cat-1.jpg', title: 'Sanatan', desc: 'Peace of Mind ' },
-    { id: 1, name: 'One Piece', url: '', img: '/cat-mug-1.jpg', title: 'Anime', desc: 'Dream Comes True' },
-    { id: 3, name: "Motivational", url: '', img: '/frame-cat-3.jpg', title: 'Motivational', desc: 'Remember Why You Start' },
-]
 
 // categories end 
 
 const ProductsPage = ({ params }) => {
 
     let { slug } = params;
+    const [slideDataClothes, setSlideDataClothes] = useState({})
+    const [slideDataAccessories, setSlideDataAccessories] = useState({})
+    const [mugData, setMugData] = useState({})
+    const [posterData, setPosterData] = useState({})
+    const [clothesData, setClothesData] = useState({})
+    const [clothesSubCat, setClothesSubCat] = useState({})
+
+
+
+    // get banners 
+    const getBannersClothes = async () => {
+        let cat = {
+            "category": "clothes"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getBanner", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setSlideDataClothes(images);
+            // console.log(slideData);
+
+            // console.log(images);
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getBannersAccessories = async () => {
+        let cat = {
+            "category": "accessories"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getBanner", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setSlideDataAccessories(images);
+            // console.log(slideData);
+
+            // console.log(images);
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    // get categories
+    const getCategoriesClothes = async () => {
+        let cat = {
+            "category": "clothes"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setClothesData(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getCategoriesClothesSubCat = async () => {
+        let cat = {
+            "category": "clothes-subCat"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setClothesSubCat(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getCategoriesAccessories = async () => {
+        let cat = {
+            "category": "accessories"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setMugData(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+    const getCategoriesAccessoriesFrames = async () => {
+        let cat = {
+            "category": "accessories-frame"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getCategories", cat).then(({ data }) => {
+            let images = data?.data?.imgs;
+            setPosterData(images);
+
+        }).catch(({ response }) => {
+
+        })
+    }
+
+
+    useEffect(() => {
+        if (!slideDataClothes?.length) {
+            getBannersClothes()
+        }
+
+        if (!slideDataAccessories?.length) {
+            getBannersAccessories()
+        }
+        // console.log(!slideData?.length);
+
+        if (!clothesData?.length) {
+            getCategoriesClothes()
+        }
+
+        if (!mugData?.length) {
+            getCategoriesAccessories()
+
+        }
+
+        if (!posterData?.length) {
+            getCategoriesAccessoriesFrames()
+        }
+        if (!clothesSubCat?.length) {
+            getCategoriesClothesSubCat()
+        }
+
+    }, [])
+
 
     return (
         <div className='home'>
-            <HeroBanner slideData={slug == 'clothes' ? slideData : slideDataAccessories} loop={false} />
+            <HeroBanner slideData={slug == 'clothes' ? slideDataClothes : slideDataAccessories} loop={false} />
             <Wrapper>
 
                 {/* all product section start  */}
@@ -143,7 +242,7 @@ const ProductsPage = ({ params }) => {
 
                 {/*First Category */}
                 <div className='mt-4'>
-                    <Categories slides={slug == 'clothes' ? clothesCategory : accessoriesCategory} />
+                    <Categories slides={slug == 'clothes' ? clothesData : mugData} />
                 </div>
                 {/* First Category  end */}
 
@@ -160,7 +259,7 @@ const ProductsPage = ({ params }) => {
 
                 {/*Theme Category */}
                 <div className='mt-4'>
-                    <Categories slides={slug == 'clothes' ? clothesThemeCat : accessoriesThemeCategory} />
+                    <Categories slides={slug == 'clothes' ? clothesSubCat : posterData} />
                 </div>
                 {/* Theme Category  end */}
 
