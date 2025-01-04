@@ -108,6 +108,13 @@ const ProductsPage = ({ params }) => {
     const [clothesData, setClothesData] = useState({})
     const [clothesSubCat, setClothesSubCat] = useState({})
 
+    const [newClothesProduct, setNewClothesProduct] = useState({})
+    const [newAccessoriesProduct, setNewAccessoriesProduct] = useState({})
+    const [clothesBestProduct, setClothesBestProduct] = useState({})
+    const [bestAccessoriesProduct, setBestAccessoriesProduct] = useState({})
+
+
+
 
 
     // get banners 
@@ -180,6 +187,7 @@ const ProductsPage = ({ params }) => {
 
         })
     }
+
     const getCategoriesAccessoriesFrames = async () => {
         let cat = {
             "category": "accessories-frame"
@@ -188,6 +196,64 @@ const ProductsPage = ({ params }) => {
             let images = data?.data?.imgs;
             setPosterData(images);
 
+        }).catch(({ response }) => {
+
+        })
+    }
+
+
+    // get products 
+    const getNewClosthes = async () => {
+        let keys = {
+            "key": "new-clothes"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product;
+            if (!newClothesProduct.length) {
+                setNewClothesProduct(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getNewAccessories = async () => {
+        let keys = {
+            "key": "new-accessories"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product
+            if (!newAccessoriesProduct.length) {
+                setNewAccessoriesProduct(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getBestClothes = async () => {
+        let keys = {
+            "key": "best-clothes"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product
+            if (!clothesBestProduct.length) {
+                setClothesBestProduct(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getBestAccesories = async () => {
+        let keys = {
+            "key": "best-accessories"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product
+            if (!bestAccessoriesProduct.length) {
+                setBestAccessoriesProduct(products)
+            }
         }).catch(({ response }) => {
 
         })
@@ -220,6 +286,22 @@ const ProductsPage = ({ params }) => {
             getCategoriesClothesSubCat()
         }
 
+        if (!newClothesProduct?.length) {
+            getNewClosthes()
+        }
+
+        if (!newAccessoriesProduct?.length) {
+            getNewAccessories()
+        }
+
+        if (!clothesBestProduct?.length) {
+            getBestClothes()
+        }
+
+        if (!bestAccessoriesProduct?.length) {
+            getBestAccesories()
+        }
+
     }, [])
 
 
@@ -237,7 +319,7 @@ const ProductsPage = ({ params }) => {
                     />
                     {/* heading  end */}
 
-                    <ProductSlider slides={slug == 'clothes' ? latestClothes : newarivalsAccessories} />
+                    <ProductSlider slides={slug == 'clothes' ? newClothesProduct : newAccessoriesProduct} />
                 </div>
 
                 {/*First Category */}
@@ -254,7 +336,7 @@ const ProductsPage = ({ params }) => {
                         text="Best Seller"
                     />
                     {/* heading  end */}
-                    <ProductSlider slides={slug == 'clothes' ? clothesBestSeller : bestSellerAccessories} />
+                    <ProductSlider slides={slug == 'clothes' ? clothesBestProduct : bestAccessoriesProduct} />
                 </div>
 
                 {/*Theme Category */}

@@ -20,8 +20,10 @@ import Link from 'next/link';
 
 const ProductSlider = ({ slides }) => {
 
+
+
     return (
-        <div className=' mt-3 select-none' >
+        slides && <div className=' mt-3 select-none' >
             <Swiper
                 // install Swiper modules
                 modules={[Navigation, Scrollbar, Autoplay, FreeMode]}
@@ -29,7 +31,7 @@ const ProductSlider = ({ slides }) => {
                     delay: 5000,
                     disableOnInteraction: true,
                 }}
-                loop={true}
+                // loop={true}
                 freeMode={true}
                 slidesPerView={2}
                 spaceBetween={40}
@@ -50,12 +52,15 @@ const ProductSlider = ({ slides }) => {
                 }}
                 className='mySwiper '
             >
-                {slides?.map((slide, i) => {
+                {Object.keys(slides)?.map((k, i) => {
+                    let slide = slides[k]?.product_info;
+                    // console.log(slide);
+
                     return <SwiperSlide key={i}>
                         <div >
-                            <Link href={`/productpage/${slide?.title}`}>
-                                <ProductCard css={'lg:w-[17.8vw] md:w-[29vw] w-[45vw] '} csstext={'lg:max-w-[18vw] lg:w-[17.8vw] md:w-[29vw] w-[42vw]'} product={slide} />
-                            </Link>
+                            {/* <Link href={`/productpage/${slide?.title}`}> */}
+                            <ProductCard _id={slides[k]?._id} css={'lg:w-[17.8vw] md:w-[29vw] w-[45vw] '} csstext={'lg:max-w-[18vw] lg:w-[17.8vw] md:w-[29vw] w-[42vw]'} product={slide} />
+                            {/* </Link> */}
                         </div>
                     </SwiperSlide>
                 })}

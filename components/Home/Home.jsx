@@ -101,6 +101,10 @@ const Home = () => {
     const [mugData, setMugData] = useState({})
     const [posterData, setPosterData] = useState({})
     const [clothesData, setClothesData] = useState({})
+    const [newProducts, setNewProducts] = useState({})
+    const [bestSellerProduct, setBestSellerProduct] = useState({})
+    const [newMug, setNewMug] = useState({})
+    const [newPoster, setNewPoster] = useState({})
 
 
     const { scrollYProgress } = useScroll({
@@ -168,6 +172,65 @@ const Home = () => {
     }
 
 
+    // get products 
+    const getNewProducts = async () => {
+        let keys = {
+            "key": "new"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product;
+            if (!newProducts.length) {
+                setNewProducts(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getBestProducts = async () => {
+        let keys = {
+            "key": "best"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product
+            if (!bestSellerProduct.length) {
+                setBestSellerProduct(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getNewMugs = async () => {
+        let keys = {
+            "key": "new-mug"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product
+            if (!newMug.length) {
+                setNewMug(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+    const getNewPosters = async () => {
+        let keys = {
+            "key": "new-poster"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product
+            if (!newPoster.length) {
+                setNewPoster(products)
+            }
+        }).catch(({ response }) => {
+
+        })
+    }
+
+
+
     useEffect(() => {
         if (!slideData?.length) {
             getBanners()
@@ -185,6 +248,22 @@ const Home = () => {
         if (!posterData?.length) {
             getCategoriesAccessoriesFrames()
         }
+        if (!newProducts?.length) {
+            getNewProducts()
+        }
+
+        if (!bestSellerProduct?.length) {
+            getBestProducts()
+        }
+
+        if (!newMug?.length) {
+            getNewMugs()
+        }
+
+        if (!newPoster?.length) {
+            getNewPosters()
+        }
+
         // console.log(!slideData?.length);
 
     }, [])
@@ -228,7 +307,7 @@ const Home = () => {
                     />
                     {/* heading  end */}
 
-                    <ProductSlider slides={productSlides} />
+                    <ProductSlider slides={newProducts} />
                 </div>
 
                 {/*First Category */}
@@ -245,7 +324,7 @@ const Home = () => {
                         text="Best Sellers"
                     />
                     {/* heading  end */}
-                    <ProductSlider slides={bestProductSlides} />
+                    <ProductSlider slides={bestSellerProduct} />
                 </div>
 
 
@@ -263,7 +342,7 @@ const Home = () => {
                         text="New Mugs"
                     />
                     {/* heading  end */}
-                    <ProductSlider slides={mugsSlides} />
+                    <ProductSlider slides={newMug} />
                 </div>
 
                 {/*Frame Category */}
@@ -280,7 +359,7 @@ const Home = () => {
                         text="New Frames"
                     />
                     {/* heading  end */}
-                    <ProductSlider slides={frameSlides} />
+                    <ProductSlider slides={newPoster} />
                 </div>
 
                 <div className='my-6'>
