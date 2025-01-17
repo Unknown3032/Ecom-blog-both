@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -13,6 +13,9 @@ import 'swiper/css/pagination';
 import { FreeMode, Pagination } from 'swiper/modules';
 import AccordionUi from '@/components/AccordionUi';
 import axios from 'axios';
+import { UserContext } from '@/app/layout';
+import { Spinner } from '@nextui-org/react';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const ProductPage = ({ params }) => {
@@ -20,7 +23,16 @@ const ProductPage = ({ params }) => {
     let { slug: _id } = params;
 
     const [productData, setProductData] = useState({})
+    const [size, setSize] = useState('');
+    const [curColor, setCurColor] = useState('');
+
+    //for spinner 
+    const [loder, setLoder] = useState(false)
+
+
     let accorddianData = [{ title: 'Size', content: ['it comes in two size'] }]
+    // get token 
+    let { userAuth: { token }, userAuth } = useContext(UserContext)
 
 
     const getProductData = async () => {
@@ -37,20 +49,42 @@ const ProductPage = ({ params }) => {
                 setProductData(product)
             }
         }).catch(({ response }) => {
-
+            toast.error("something went wrong try again after some time");
         })
     }
 
+    const addToBag = async (color, size, qty, product_id) => {
+        let item = { product_id, qty, size, color }
+        if (token) {
+            if (!loder) {
+                setLoder(true)
+                await axios.post(process.env.NEXT_PUBLIC_URL + "/api/postCartItem", { item }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((data) => {
+                    let tempCartItem = data?.data;
+                    toast.success(`${productData["title"]} is added to bag`);
+                    // console.log(tempCartItem);
+                }).catch((e) => {
+                    console.log("something went wrong try again after some time");
+                    toast.error("something went wrong try again after some time");
+                })
+                setLoder(false)
+            }
+        }
+        else {
+            toast.error("Please login first for add to bag");
+        }
+    }
+
     useEffect(() => {
-
         getProductData()
-
     }, [])
-
-
 
     return (
         productData && <div className='mb-10 pb-10'>
+            <Toaster position="bottom-center" />
             <div className='home relative h-[70vh]  lg:h-screen select-none overflow-hidden md:-mt-[80px] -mt-[60px] text-white antialiased top-0 bg-white/20 '>
                 <Swiper
                     slidesPerView={1}
@@ -118,7 +152,10 @@ const ProductPage = ({ params }) => {
 
                                 {productData["colors"]?.map((color, i) => {
                                     return Object.keys(color)?.map((key, i) => {
-                                        let colorImg = color[key]
+                                        let colorImg = color[key];
+                                        if (!curColor) {
+                                            setCurColor(key)
+                                        }
                                         return (
                                             <div className='cursor-pointer' key={i}>
                                                 <img className='h-20 object-cover aspect-2/3 rounded' src={colorImg} alt={key} />
@@ -136,22 +173,22 @@ const ProductPage = ({ params }) => {
                             <h2 className='lg:text-black text-white mt-2 text-lg'>Size Guide</h2>
                             <div className='h-8 flex justify-center mb-4 mt-3'>
 
-                                {productData["sizes"]?.map((size, i) => {
-
-                                    return Object.keys(size)?.map((s) => {
-                                        return <span key={i} className='text-small text-white lg:text-black transition-all duration-200 py-2 px-3 rounded-lg
-                                        cursor-pointer  hover:bg-dark-grey/40'>
-                                            {s.toUpperCase()}
+                                {productData["sizes"]?.map((Size, i) => {
+                                    return Object.keys(Size)?.map((s) => {
+                                        return <span onClick={(() => setSize(s?.toUpperCase()))} key={i}
+                                            className={`text-small text-white lg:text-black transition-all duration-200 py-2 px-3 rounded-lg cursor-pointer ${s?.toUpperCase() == size ? "bg-dark-grey/40" : ""}   hover:bg-dark-grey/40`}>
+                                            {s?.toUpperCase()}
                                         </span>
                                     })
-
                                 })}
                                 <div>
 
                                 </div>
 
                             </div>
-                            <button className='text-black bg-white lg:bg-bgblack lg:text-white w-full py-2 rounded-full text-xl'>Select Size</button>
+                            <button
+                                onClick={(() => { size ? addToBag(curColor, size, 1, _id) : "" })}
+                                className='text-black bg-white lg:bg-bgblack lg:text-white w-full py-2 rounded-full text-xl'>  {!loder ? !size ? 'select size' : "add to bag" : <Spinner size="sm" color="default" />}</button>
                         </div>
                     </div>
 
