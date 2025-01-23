@@ -162,7 +162,6 @@ export default function Login({ activeLogin, setActiveLogin }) {
 
     return (
         <div >
-            <Toaster position="top-center" />
             <Button onPress={onOpen} onClick={() => setActiveLogin(isOpen)} className="bg-transparent text-white"> <IoLogInOutline className="text-[19px] md:text-[24px]" /></Button>
             {activeForm == 'login' && <Modal
                 backdrop="opaque"

@@ -18,7 +18,7 @@ export async function POST(req) {
 
 
     // request.body
-    const { key } = await req.json()
+    const { key, cat, subCat, sortedAs } = await req.json()
 
     if (key) {
         if (key == 'new') {
@@ -118,79 +118,426 @@ export async function POST(req) {
         }
 
         if (key == 'new-clothes') {
-            await Product.find({ "product_info.category": "clothes" }).sort({ _id: -1 }).then(async (product) => {
-                // console.log(product);
+            if (sortedAs) {
+                if (sortedAs == 'low-high') {
+                    await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.price": 1 }).then(async (product) => {
+                        // console.log(product);
 
-                if (product?.length) {
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+                if (sortedAs == 'high-low') {
+                    await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.price": -1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+                if (sortedAs == 'best') {
+                    await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.sales": -1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+            }
+            else {
+                await Product.find({ "product_info.category": "clothes" }).sort({ _id: -1 }).then(async (product) => {
                     // console.log(product);
-                    data = { product }
-                    status = 200
-                    return NextResponse.json({ data }, { status })
-                }
-                else {
-                    data = { "error": "some thing went wrong!" }
-                    status = 404
-                    return NextResponse.json({ data }, { status })
-                }
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
 
 
-            }).catch((e) => {
-                data = { "error": e.message }
-                status = 500
-                console.error(e.message); // "oh, no!"
-            })
+                }).catch((e) => {
+                    data = { "error": e.message }
+                    status = 500
+                    console.error(e.message); // "oh, no!"
+                })
+            }
         }
 
         if (key == 'new-accessories') {
-            await Product.find({ "product_info.category": "accessories" }).sort({ _id: -1 }).then(async (product) => {
-                // console.log(product);
+            if (sortedAs) {
+                if (sortedAs == 'low-high') {
+                    await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.price": 1 }).then(async (product) => {
+                        // console.log(product);
 
-                if (product?.length) {
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+                if (sortedAs == 'high-low') {
+                    await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.price": -1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+                if (sortedAs == 'best') {
+                    await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.sales": -1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+            }
+            else {
+                await Product.find({ "product_info.category": "accessories" }).sort({ _id: -1 }).then(async (product) => {
                     // console.log(product);
-                    data = { product }
-                    status = 200
-                    return NextResponse.json({ data }, { status })
-                }
-                else {
-                    data = { "error": "some thing went wrong!" }
-                    status = 404
-                    return NextResponse.json({ data }, { status })
-                }
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
 
 
-            }).catch((e) => {
-                data = { "error": e.message }
-                status = 500
-                console.error(e.message); // "oh, no!"
-            })
+                }).catch((e) => {
+                    data = { "error": e.message }
+                    status = 500
+                    console.error(e.message); // "oh, no!"
+                })
+            }
         }
 
         if (key == 'best-accessories') {
-            await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.sales": -1 }).then(async (product) => {
-                // console.log(product);
+            if (sortedAs && sortedAs != 'best') {
+                if (sortedAs == 'low-high') {
+                    await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.price": 1 }).then(async (product) => {
+                        // console.log(product);
 
-                if (product?.length) {
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+                if (sortedAs == 'high-low') {
+                    await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.price": -1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+
+            }
+
+            else {
+                await Product.find({ "product_info.category": "accessories" }).sort({ "product_info.sales": -1 }).then(async (product) => {
                     // console.log(product);
-                    data = { product }
-                    status = 200
-                    return NextResponse.json({ data }, { status })
-                }
-                else {
-                    data = { "error": "some thing went wrong!" }
-                    status = 404
-                    return NextResponse.json({ data }, { status })
-                }
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
 
 
-            }).catch((e) => {
-                data = { "error": e.message }
-                status = 500
-                console.error(e.message); // "oh, no!"
-            })
+                }).catch((e) => {
+                    data = { "error": e.message }
+                    status = 500
+                    console.error(e.message); // "oh, no!"
+                })
+            }
         }
 
         if (key == 'best-clothes') {
-            await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.sales": -1 }).then(async (product) => {
+
+            if (sortedAs && sortedAs != 'best') {
+                if (sortedAs == 'low-high') {
+                    await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.price": 1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+                if (sortedAs == 'high-low') {
+                    await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.price": -1 }).then(async (product) => {
+                        // console.log(product);
+
+                        if (product?.length) {
+                            // console.log(product);
+                            data = { product }
+                            status = 200
+                            return NextResponse.json({ data }, { status })
+                        }
+                        else {
+                            data = { "error": "some thing went wrong!" }
+                            status = 404
+                            return NextResponse.json({ data }, { status })
+                        }
+
+
+                    }).catch((e) => {
+                        data = { "error": e.message }
+                        status = 500
+                        console.error(e.message); // "oh, no!"
+                    })
+                }
+
+
+            }
+            else {
+                await Product.find({ "product_info.category": "clothes" }).sort({ "product_info.sales": -1 }).then(async (product) => {
+                    // console.log(product);
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
+
+
+                }).catch((e) => {
+                    data = { "error": e.message }
+                    status = 500
+                    console.error(e.message); // "oh, no!"
+                })
+            }
+        }
+    }
+
+    else if (cat && subCat) {
+        if (sortedAs) {
+            if (sortedAs == 'best') {
+                await Product.find({ "product_info.category": cat, "product_info.subCategory": subCat }).sort({ "product_info.sales": -1 }).then(async (product) => {
+                    // console.log(product);
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
+                })
+            }
+
+            if (sortedAs == 'low-high') {
+                await Product.find({ "product_info.category": cat, "product_info.subCategory": subCat }).sort({ "product_info.price": 1 }).then(async (product) => {
+                    // console.log(product);
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
+
+
+                })
+            }
+
+            if (sortedAs == 'high-low') {
+                await Product.find({ "product_info.category": cat, "product_info.subCategory": subCat }).sort({ "product_info.price": -1 }).then(async (product) => {
+                    // console.log(product);
+
+                    if (product?.length) {
+                        // console.log(product);
+                        data = { product }
+                        status = 200
+                        return NextResponse.json({ data }, { status })
+                    }
+                    else {
+                        data = { "error": "some thing went wrong!" }
+                        status = 404
+                        return NextResponse.json({ data }, { status })
+                    }
+
+
+                })
+            }
+
+        }
+
+        else {
+            await Product.find({ "product_info.category": cat, "product_info.subCategory": subCat }).sort({ _id: -1 }).then(async (product) => {
                 // console.log(product);
 
                 if (product?.length) {
@@ -206,13 +553,16 @@ export async function POST(req) {
                 }
 
 
+
             }).catch((e) => {
                 data = { "error": e.message }
                 status = 500
                 console.error(e.message); // "oh, no!"
             })
         }
+
     }
+
 
     else {
         data = { "error": "some thing went wrong!" }

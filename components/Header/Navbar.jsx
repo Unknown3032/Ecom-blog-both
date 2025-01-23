@@ -3,19 +3,14 @@ import React, { useState, useEffect, useContext } from "react";
 
 import Link from "next/link";
 import Menu from "./Menu";
-import MenuMobile from "./MenuMobile";
 
-import { BsCart, BsSearch } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
-import { IoLogInOutline } from "react-icons/io5";
 import { VscChromeClose } from "react-icons/vsc";
 import { IoBagOutline } from "react-icons/io5";
 
-import { AnimatePresence, motion } from "framer-motion";
 
 
-
-import { fadeIn } from "@/varient";
 import UserNavigation from "./UserNavigation";
 import Wrapper from "../Wrapper";
 import MegaMenu from "./MegaMenu";

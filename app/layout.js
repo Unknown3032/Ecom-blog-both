@@ -5,8 +5,9 @@ import { createContext, useEffect, useState } from "react";
 
 import Navbar from "@/components/Header/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { NextUIProvider } from "@nextui-org/react";
 import { lookInSession } from "@/common/SessionFunc";
+
+import { HeroUIProvider } from '@heroui/react'
 
 import "./globals.css";
 import localFont from "next/font/local";
@@ -58,7 +59,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <NextUIProvider>
+        <HeroUIProvider>
           <UserContext.Provider value={{ userAuth, setUserAuth, setActiveUserAuth }}>
             <div className="relative z-20" >
               <Navbar />
@@ -68,7 +69,7 @@ export default function RootLayout({ children }) {
               <Footer />
             </div>
           </UserContext.Provider>
-        </NextUIProvider>
+        </HeroUIProvider>
       </body>
     </html>
   );

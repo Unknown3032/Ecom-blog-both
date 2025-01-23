@@ -1,5 +1,6 @@
 
-const { nextui } = require("@nextui-org/react");
+import { heroui } from "@heroui/react";
+
 
 /** @type {import('tailwindcss').Config} */
 
@@ -100,7 +101,7 @@ module.exports = {
 	darkMode: "class",
 	plugins: [
 		require('tailwind-scrollbar-hide'),
-		nextui(),
+		heroui(),
 		function ({ addUtilities }) {
 			const newUtilities = {
 				".noScrollbar::-webkit-scrollbar": {

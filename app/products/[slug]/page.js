@@ -1,9 +1,10 @@
 'use client'
 
+import DrawerFilter from '@/components/ProductPage/DrawerFilter'
 import Filter from '@/components/ProductPage/Filter'
-import MobileFiter from '@/components/ProductPage/MobileFiter'
 import ProductCard from '@/components/ProductSlider/ProductCard'
 import Wrapper from '@/components/Wrapper'
+import axios from 'axios'
 
 
 
@@ -11,44 +12,284 @@ import { motion } from 'framer-motion'
 
 
 import { useSearchParams } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
 
 
 
 
 const filterData = [
-    { name: 'Sort By:', subFilter: ['featured', 'Best Selling', 'Newest', 'Price:Low-High', 'Price:High-Low'], key: 1 },
+    { name: 'Sort By:', subFilter: ['featured', 'Best Selling', 'Price:Low-High', 'Price:High-Low'], key: 1 },
     { name: 'Collection', subFilter: ['Anime', 'Spritual', 'Gym', 'Casual'], key: 2 },
 ]
 
-const productSlides = [
-
-    { images: ['/productos-hoodie-de-gira-blanco-1.jpg', '/productos-hoodie-de-gira-blanco-2.jpg'], title: 'White Hoddie', desc: "It's a Ghost Outfit", colors: [{ white: '/productos-hoodie-de-gira-blanco-1.jpg' }, { black: '/productos-hoodie-de-gira-blanco-2.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 999 },
-
-    { images: ['/productos-buzo-flaakko-negro-1.jpg', '/productos-buzo-flaakko-negro-2.jpg'], title: 'Full Slive T-shirt Hoddie', desc: "It's a Ghost Outfit", colors: [{ white: '/productos-buzo-flaakko-negro-1.jpg' }, { black: '/productos-buzo-flaakko-negro-2.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 799 },
-
-    { images: ['/collection-remeras-top.jpg', '/collection-remeras-bottom.jpg'], title: 'Unisex T-shirt', desc: "It's a Ghost Outfit", colors: [{ white: '/collection-remeras-top.jpg' }, { black: '/collection-remeras-bottom.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 999 },
-
-    { images: ['/productos-hoodie-de-gira-negro-1.jpg', '/productos-hoodie-de-gira-negro-2.jpg'], title: 'Full Slive T-shirt Hoddie', desc: "It's a Ghost Outfit", colors: [{ white: '/productos-hoodie-de-gira-negro-1.jpg' }, { black: '/productos-hoodie-de-gira-negro-2.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 999 },
-
-    { images: ['/collection-accesorios-bottom.jpg', '/collection-accesorios-top.jpg'], title: 'Ghost White T-shirt', desc: "It's a Ghost Outfit", colors: [{ white: '/collection-accesorios-bottom.jpg' }, { black: 'collection-accesorios-top.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 599 },
-
-    { images: ['/collection-buzos-top.jpg', '/collection-buzos-bottom.jpg'], title: 'White Hoddie', desc: "It's a Ghost Outfit", colors: [{ white: '/collection-buzos-top.jpg' }, { black: '/collection-buzos-bottom.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 999 },
-
-    { images: ['/productos-remera-de-gira-blanca-1.jpg', '/productos-remera-de-gira-blanca-2.jpg'], title: 'White T-shirt', desc: "It's a Ghost Outfit", colors: [{ white: '/productos-remera-de-gira-blanca-1.jpg' }, { black: '/productos-remera-de-gira-blanca-2.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 599 },
-
-    { images: ['/productos-remera-ojos-negra-1.jpg', '/productos-remera-ojos-negra-2.jpg'], title: 'Black T-shirt', desc: "It's a Ghost Outfit", colors: [{ white: '/productos-remera-ojos-negra-2.jpg' }, { black: '/productos-remera-ojos-negra-1.jpg' }], sizes: ["xl", "xxl"], bulletPoints: [], price: 599 },
-]
 
 const Products = ({ params }) => {
     const { slug } = params;
     const [mobileFilter, setMobileFilter] = useState(false);
+    const [curProducts, setCurProudcts] = useState([]);
+    const [banner, setBanner] = useState('');
 
-    const searchParams = useSearchParams()
-    const search = searchParams.get('search')
+    const searchParams = useSearchParams();
+    const search = searchParams.get('search');
+
+    const [selectedCat, setSelectedCat] = useState("");
+    const [selectedSort, setSelectedSort] = useState("featured");
+    const [value, setValue] = useState([0, 5000]);
+
+
+    // get banner 
+    const getBanner = async () => {
+
+        let cat = {
+            "category": `${search?.toLowerCase()}-${slug?.toLowerCase()}`
+        };
+
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getBanner", cat).then(({ data }) => {
+            let banner = data?.data?.imgs[0]?.img_info?.url;
+            // console.log(banner);
+            if (banner) {
+                setBanner(banner)
+            } else {
+                setBanner('')
+            }
+
+        }).catch(({ response }) => {
+            setCurProudcts(null)
+        })
+    }
+
+    // get products 
+    const getProducts = async () => {
+        let cat;
+        let subCat;
+        let min = value[0];
+        let max = value[1];
+
+        let key = `${search}-${slug?.toLowerCase()}`;
+        if (search?.toLowerCase() != 'best' && search?.toLowerCase() != 'new') {
+            cat = `${slug?.toLowerCase()}`;
+            subCat = `${search?.toLowerCase()}`;
+            key = null
+            // console.log(subCat);
+        }
+        let keys = {
+            "key": key,
+            "cat": cat ? cat : null,
+            "subCat": subCat ? subCat : null,
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product;
+            let priceFilter = []
+            // console.log(products);
+            if (products?.length) {
+                if (max) {
+                    products?.filter((item) => {
+                        if (item?.product_info?.price <= max && item?.product_info?.price >= min) {
+                            priceFilter.push(item);
+                        }
+                    }
+                    );
+                    setCurProudcts(priceFilter);
+                }
+
+                else {
+                    setCurProudcts(products)
+                }
+            } else {
+                setCurProudcts(null)
+            }
+
+        }).catch(({ response }) => {
+            setCurProudcts(null)
+        })
+    }
+
+    const sortedProduct = async (sort) => {
+        let cat;
+        let subCat;
+        let min = value[0];
+        let max = value[1];
+
+        let key = `${search}-${slug?.toLowerCase()}`;
+        if (search?.toLowerCase() != 'best' && search?.toLowerCase() != 'new') {
+            cat = `${slug?.toLowerCase()}`;
+            subCat = `${search?.toLowerCase()}`;
+            key = null
+        }
+        let keys = {
+            "key": key,
+            "cat": cat ? cat : null,
+            "subCat": subCat ? subCat : null,
+            "sortedAs": sort,
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product;
+            let priceFilter = []
+            // console.log(products);
+            if (products?.length) {
+                if (max) {
+                    products?.filter((item) => {
+                        if (item?.product_info?.price <= max && item?.product_info?.price >= min) {
+                            priceFilter.push(item);
+                        }
+                    }
+                    );
+                    setCurProudcts(priceFilter);
+                }
+
+                else {
+                    setCurProudcts(products)
+                    console.log(priceFilter);
+                }
+            } else {
+                setCurProudcts(null)
+            }
+
+        }).catch(({ response }) => {
+            setCurProudcts(null)
+        })
+    }
+
+    const sortedProductTheme = async (sort, theme) => {
+        let cat;
+        let subCat;
+        let min = value[0];
+        let max = value[1];
+
+        let key = `${search}-${slug?.toLowerCase()}`;
+        if (search?.toLowerCase() != 'best' && search?.toLowerCase() != 'new') {
+            cat = `${slug?.toLowerCase()}`;
+            subCat = `${search?.toLowerCase()}`;
+            key = null
+        }
+        let keys = {
+            "key": key,
+            "cat": cat ? cat : null,
+            "subCat": subCat ? subCat : null,
+            "sortedAs": sort,
+            "theme": theme?.toLowerCase(),
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/filterProduct", keys).then(({ data }) => {
+            let products = data?.data?.product;
+            let priceFilter = []
+            // console.log(products);
+            if (products?.length) {
+                if (max) {
+                    products?.filter((item) => {
+                        if (item?.product_info?.price <= max && item?.product_info?.price >= min) {
+                            priceFilter.push(item);
+                        }
+                    }
+                    );
+                    setCurProudcts(priceFilter)
+                }
+                else {
+                    setCurProudcts(products)
+                }
+
+            } else {
+                setCurProudcts(null)
+            }
+
+        }).catch(({ response }) => {
+            setCurProudcts(null)
+        })
+    }
+
+    // fiter sorted 
+    const sortedBy = async (curContent) => {
+        setCurProudcts(null)
+        if (curContent == 'featured') {
+            await getProducts()
+        }
+
+        if (curContent == 'Best Selling') {
+            await sortedProduct('best')
+        }
+
+        if (curContent == 'Price:Low-High') {
+            await sortedProduct('low-high')
+        }
+
+        if (curContent == 'Price:High-Low') {
+            await sortedProduct('high-low')
+        }
+    }
+
+    // filter by category 
+    const sortedByTheme = async (curContent, theme) => {
+        setCurProudcts(null)
+
+        if (curContent == 'featured') {
+            await sortedProductTheme('featured', theme?.toLowerCase())
+        }
+
+        if (curContent == 'Best Selling') {
+            await sortedProductTheme('best', theme?.toLowerCase())
+        }
+
+        if (curContent == 'Price:Low-High') {
+            await sortedProductTheme('low-high', theme?.toLowerCase())
+        }
+
+        if (curContent == 'Price:High-Low') {
+            await sortedProductTheme('high-low', theme?.toLowerCase())
+        }
+    }
+
+    // price filter 
+    const priceFilter = async (value) => {
+
+        setCurProudcts(null)
+        if (selectedSort == 'featured') {
+            if (selectedCat?.length) {
+                await sortedProductTheme('featured', selectedCat)
+            } else {
+                await getBanner()
+            }
+        }
+
+        if (selectedSort == 'Best Selling') {
+            if (selectedCat?.length) {
+                await sortedProductTheme('best', selectedCat)
+            } else {
+                await sortedBy('best')
+            }
+
+        }
+
+        if (selectedSort == 'Price:Low-High') {
+            if (selectedCat?.length) {
+                await sortedProductTheme('low-high', selectedCat)
+            } else {
+                await sortedBy('low-high')
+            }
+
+        }
+
+        if (selectedSort == 'Price:High-Low') {
+            if (selectedCat?.length) {
+                await sortedProductTheme('high-low', selectedCat)
+            } else {
+                await sortedBy('high-low')
+            }
+        }
+    }
+
+
+
+    useEffect(() => {
+        getProducts();
+        getBanner();
+    }, [search, value])
+
+    useEffect(() => {
+        priceFilter(value)
+    }, [search, value])
+
+
 
 
     return (
@@ -59,21 +300,16 @@ const Products = ({ params }) => {
                 transition={{
                     duration: 0.8
                 }}
-                className='relative bg-dark-grey h-[45vh] md:h-[45vh] select-none overflow-hidden md:-mt-[80px] -mt-[60px] text-white antialiased top-0 bg-white/20 '>
-                <img className=' bg-dark-grey h-full w-full object-cover brightness-90 grayscale-5' src={'/clothesTheme-1 (3).webp'} alt={''} />
+                className='relative bg-dark-grey h-[45vh] md:h-[55vh] select-none overflow-hidden md:-mt-[80px] -mt-[60px] text-white antialiased top-0 bg-white/20 '>
+                <img className=' bg-dark-grey h-full w-full select-none object-cover  brightness-90 grayscale-5' src={!banner ? '/clothesTheme-1 (3).webp' : banner} alt={''} />
 
-                <div className='absolute left-2 z-20 bottom-4'>
-                    <h2 className=' text-sm font-semibold'>{slug}</h2>
-                    <h1 className='md:text-3xl text-2xl -mt-1'>{search}</h1>
-                    <p className='text-xl -mt-1 font-semibold'>12 Products</p>
-                </div>
             </motion.div>
 
             <Wrapper>
                 <div className='flex mt-5 lg:gap-8 '>
                     {/* large screen filter */}
-                    <div className='lg:w-[25vw] hidden  lg:flex '>
-                        <Filter slug={slug} filterData={filterData} search={search} />
+                    <div className='lg:w-[28vw] hidden  lg:flex '>
+                        <Filter value={value} setValue={setValue} priceFilter={priceFilter} mobileFilter={mobileFilter} sortedBy={sortedBy} setSelectedSort={setSelectedSort} setSelectedCat={setSelectedCat} selectedCat={selectedCat} sortedByTheme={sortedByTheme} slug={slug} selectedSort={selectedSort} filterData={filterData} itemNumber={curProducts?.length} search={search} />
                     </div>
 
                     {/* small screen filter */}
@@ -82,36 +318,32 @@ const Products = ({ params }) => {
                             <div className='fixed  bottom-10'>
                                 <div
                                     onClick={() => { setMobileFilter(!mobileFilter) }}
-                                    className='bg-bgblack text-white border-[1px] border-dark-grey p-4 rounded-full text-2xl font-bold'>
-                                    <HiOutlineAdjustmentsHorizontal className='' />
+                                >
+                                    <DrawerFilter value={value} setValue={setValue} priceFilter={priceFilter} mobileFilter={mobileFilter} setSelectedSort={setSelectedSort} selectedSort={selectedSort} selectedCat={selectedCat} setSelectedCat={setSelectedCat} sortedBy={sortedBy} sortedByTheme={sortedByTheme} filterData={filterData} />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {mobileFilter &&
-                        <div>
-                            <div className='absolute z-10 top-0 right-0 left-0 bottom-0 bg-black opacity-30 lg:hidden'
-                                onClick={() => { setMobileFilter(!mobileFilter) }}
-                            >
-
-                            </div>
-                            <MobileFiter slug={slug} filterData={filterData} mobileFilter={mobileFilter} />
-                        </div>}
-
                     {/* products  */}
-                    <div className='grid md:grid-cols-3 grid-cols-2 place-items-center w-full '>
-                        {productSlides?.map((slide, i) => {
-                            return <div key={i} className='py-2 '>
-                                <ProductCard product={slide} css={'lg:w-[22vw] md:w-[28.5vw] w-[42vw]  opacity-90 '} csstext={'lg:max-w-[18vw] lg:w-[17.8vw] md:w-[29vw] w-[42vw]'} />
-                            </div>
-                        })}
-                    </div>
+                    <div className='grid md:grid-cols-3 grid-cols-2 place-items-center h-auto w-full '>
+                        {curProducts && Object.keys(curProducts)?.map((k, i) => {
+                            let slide = curProducts[k]?.product_info;
+                            let id = curProducts[k]?._id;
 
+                            return <div key={i} className='py-2 '>
+                                <ProductCard _id={id} product={slide} css={'lg:w-[22vw] md:w-[28.5vw] w-[42vw]  opacity-90 '} csstext={'lg:w-[20vw]  md:w-[29vw] w-[42vw] '} />
+                            </div>
+
+                        })}
+
+
+                    </div>
                 </div>
-            </Wrapper>
-        </div>
+            </Wrapper >
+        </div >
     )
 }
+
 
 export default Products

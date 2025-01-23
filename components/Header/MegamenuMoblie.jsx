@@ -19,35 +19,29 @@ import Link from 'next/link';
 
 
 const featured = [
-    { name: "New Arrivals", img: "", url: "/productsPage/featured" },
-    { name: "Best Seller", img: "", url: "/products/Clothes?search=best-seller" },
-    { name: "Better In Black", img: "", url: "/products/Clothes?search=better-in-black" },
-    { name: "Basics", img: "", url: "/products/Clothes?search=basics" },
+    { name: "New Arrivals", img: "", url: "/products/clothes?search=new" },
+    { name: "Best Seller", img: "", url: "/products/Clothes?search=best" },
 ]
 
 const Products = [
     { name: "All Products", img: "", url: "/productsPage/clothes" },
     { name: "Fit T-Shirt", img: "", url: "/products/Clothes?search=Fit-T-Shirt" },
     { name: "Full Slive", img: "", url: "/products/Clothes?search=Full-slive" },
-    { name: "Hoodies", img: "", url: "/products/Clothes?search=Hoodies" },
+    { name: "Hoodies", img: "", url: "/products/Clothes?search=Hoodie" },
     { name: "Over Sized T-shirt", img: "", url: "/products/Clothes?search=Oversized-T-Shirt" },
 ]
 
 const accessfeatured = [
-    { name: "New Arrivals", img: "", url: "/products/Clothes?search=new-arrivals" },
-    { name: "Best Seller", img: "", url: "/products/Clothes?search=Best-seller" },
-    { name: "Anime", img: "", url: "/products/Clothes?search=Anime" },
-    { name: "Sanatan", img: "", url: "/products/Clothes?search=Sanatan" },
-    { name: "Motivational", img: "", url: "/products/Clothes?searc=motivational" },
-    { name: "Gym", img: "", url: "/products/Clothes?search=Fit-gym" },
+    { name: "New Arrivals", img: "", url: "/products/accessories?search=new" },
+    { name: "Best Seller", img: "", url: "/products/accessories?search=best" },
 ]
 
 const accessProducts = [
     { name: "All Products", img: "", url: "/productsPage/accessories" },
-    { name: "Frames", img: "", url: "/products/Clothes?search=frames" },
-    { name: "Mugs", img: "", url: "/products/Clothes?search=Mugs" },
-    { name: "Key Chains", img: "", url: "/products/Clothes?search=Keychains" },
-    { name: "Rings", img: "", url: "/products/Clothes?search=Rings" },
+    { name: "Frames", img: "", url: "/products/accessories?search=poster" },
+    { name: "Mugs", img: "", url: "/products/accessories?search=Mug" },
+    { name: "Key Chains", img: "", url: "/products/accessories?search=Keychains" },
+    { name: "Rings", img: "", url: "/products/accessories?search=Rings" },
 ]
 
 const MegamenuMoblie = ({ mobileMenu, setMobileMenu }) => {

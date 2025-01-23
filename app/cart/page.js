@@ -84,11 +84,11 @@ const Cart = () => {
 
     return (
         <div className='bg-bgblack w-full home'>
-            <Toaster position="bottom-center" />
+            {/* <Toaster position="bottom-center" /> */}
             <div className='flex md:flex-row flex-col'>
 
                 {/* added products side */}
-                <div className=' select-none md:w-[30vw] w-full border-dark-grey/55 min-h-[60vh] md:min-h-[93vh] md:border-r border-b flex flex-col '>
+                <div className=' select-none md:w-[32vw] w-full border-dark-grey/55 min-h-[60vh] md:min-h-[93vh] md:border-r border-b flex flex-col '>
 
                     {/* title  */}
                     <div className='w-full h-[7vh] flex justify-center items-center border-dark-grey/55 border-b'>
