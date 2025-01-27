@@ -9,14 +9,12 @@ import axios from 'axios'
 
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-
-
-
-
+import { Spinner } from '@nextui-org/react';
 
 
 const filterData = [
@@ -38,6 +36,7 @@ const Products = ({ params }) => {
     const [selectedSort, setSelectedSort] = useState("featured");
     const [value, setValue] = useState([0, 5000]);
 
+    const [loder, setLoder] = useState(false)
 
     // get banner 
     const getBanner = async () => {
@@ -66,6 +65,7 @@ const Products = ({ params }) => {
         let subCat;
         let min = value[0];
         let max = value[1];
+        setLoder(true)
 
         let key = `${search}-${slug?.toLowerCase()}`;
         if (search?.toLowerCase() != 'best' && search?.toLowerCase() != 'new') {
@@ -92,17 +92,21 @@ const Products = ({ params }) => {
                     }
                     );
                     setCurProudcts(priceFilter);
+                    setLoder(false)
                 }
 
                 else {
                     setCurProudcts(products)
+                    setLoder(false)
                 }
             } else {
                 setCurProudcts(null)
+                setLoder(false)
             }
 
         }).catch(({ response }) => {
             setCurProudcts(null)
+            setLoder(false)
         })
     }
 
@@ -111,6 +115,7 @@ const Products = ({ params }) => {
         let subCat;
         let min = value[0];
         let max = value[1];
+        setLoder(true)
 
         let key = `${search}-${slug?.toLowerCase()}`;
         if (search?.toLowerCase() != 'best' && search?.toLowerCase() != 'new') {
@@ -137,18 +142,21 @@ const Products = ({ params }) => {
                     }
                     );
                     setCurProudcts(priceFilter);
+                    setLoder(false)
                 }
 
                 else {
                     setCurProudcts(products)
-                    console.log(priceFilter);
+                    setLoder(false)
                 }
             } else {
                 setCurProudcts(null)
+                setLoder(false)
             }
 
         }).catch(({ response }) => {
             setCurProudcts(null)
+            setLoder(false)
         })
     }
 
@@ -157,6 +165,7 @@ const Products = ({ params }) => {
         let subCat;
         let min = value[0];
         let max = value[1];
+        setLoder(true)
 
         let key = `${search}-${slug?.toLowerCase()}`;
         if (search?.toLowerCase() != 'best' && search?.toLowerCase() != 'new') {
@@ -184,17 +193,21 @@ const Products = ({ params }) => {
                     }
                     );
                     setCurProudcts(priceFilter)
+                    setLoder(false)
                 }
                 else {
                     setCurProudcts(products)
+                    setLoder(false)
                 }
 
             } else {
                 setCurProudcts(null)
+                setLoder(false)
             }
 
         }).catch(({ response }) => {
             setCurProudcts(null)
+            setLoder(false)
         })
     }
 
@@ -308,7 +321,7 @@ const Products = ({ params }) => {
             <Wrapper>
                 <div className='flex mt-5 lg:gap-8 '>
                     {/* large screen filter */}
-                    <div className='lg:w-[28vw] hidden  lg:flex '>
+                    <div className='lg:w-[25vw] hidden  lg:flex '>
                         <Filter value={value} setValue={setValue} priceFilter={priceFilter} mobileFilter={mobileFilter} sortedBy={sortedBy} setSelectedSort={setSelectedSort} setSelectedCat={setSelectedCat} selectedCat={selectedCat} sortedByTheme={sortedByTheme} slug={slug} selectedSort={selectedSort} filterData={filterData} itemNumber={curProducts?.length} search={search} />
                     </div>
 
@@ -326,22 +339,41 @@ const Products = ({ params }) => {
                     </div>
 
                     {/* products  */}
-                    <div className='grid md:grid-cols-3 grid-cols-2 place-items-center h-auto w-full '>
-                        {curProducts && Object.keys(curProducts)?.map((k, i) => {
-                            let slide = curProducts[k]?.product_info;
-                            let id = curProducts[k]?._id;
+                    {loder ?
+                        <div className='w-full flex justify-center items-center'>
+                            <Spinner size="lg" color="default" />
+                        </div>
 
-                            return <div key={i} className='py-2 '>
-                                <ProductCard _id={id} product={slide} css={'lg:w-[22vw] md:w-[28.5vw] w-[42vw]  opacity-90 '} csstext={'lg:w-[20vw]  md:w-[29vw] w-[42vw] '} />
-                            </div>
+                        : curProducts?.length ? <div className='grid md:grid-cols-3 grid-cols-2 place-items-center h-auto w-full '>
+                            {curProducts && Object.keys(curProducts)?.map((k, i) => {
+                                let slide = curProducts[k]?.product_info;
+                                let id = curProducts[k]?._id;
 
-                        })}
+                                return <div key={i} className='py-2 '>
+                                    <ProductCard _id={id} product={slide} css={'lg:w-[22vw] md:w-[28.5vw] w-[42vw]  opacity-90 '} csstext={'lg:w-[20vw]  md:w-[29vw] w-[42vw] '} />
+                                </div>
 
-
-                    </div>
+                            })}
+                        </div>
+                            :
+                            <div className='flex md:flex-row lg:w-[70vw] flex-col '>
+                                {/* added products side */}
+                                <div className=' border-dark-grey/55 flex flex-col justify-center items-center w-full'>
+                                    <h1 className='text-2xl'>{search} is coming soon....</h1>
+                                    <p className='text-medium text-center'>Checkout our other products for now</p>
+                                    <button className='font-crimson px-9 py-2 rounded-full bg-white mt-4 hover:opacity-80 transition-all
+                        duration-300 text-black/90 font-bold'>
+                                        <Link href={`/productsPage/${slug}`}>
+                                            Shop Now
+                                        </Link>
+                                    </button>
+                                </div>
+                            </div>}
                 </div>
+
             </Wrapper >
         </div >
+
     )
 }
 
