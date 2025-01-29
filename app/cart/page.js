@@ -10,20 +10,39 @@ import { Spinner } from '@nextui-org/react';
 import { UserContext } from '../layout';
 
 import toast, { Toaster } from 'react-hot-toast';
+import ProductCard from '@/components/ProductSlider/ProductCard';
 
 
 const Cart = () => {
     let { userAuth: { token }, userAuth } = useContext(UserContext)
     const [cartItems, setCartItems] = useState([]);
-    const [qty, setQty] = useState(0)
+    const [qty, setQty] = useState(0);
+    const [curProducts, setCurProudcts] = useState([]);
+
 
     let p = [];
 
     //for spinner 
     const [loder, setLoder] = useState(false)
+    const [loder2, setLoder2] = useState(true)
     let curProductId;
 
+    // get products 
+    const getNewProducts = async () => {
+        setLoder2(true)
+        let keys = {
+            "key": "new"
+        };
+        await axios.post(process.env.NEXT_PUBLIC_URL + "api/getProduct", keys).then(({ data }) => {
+            let products = data?.data?.product;
+            if (!curProducts.length) {
+                setCurProudcts(products)
+                setLoder2(false)
+            }
+        }).catch(({ response }) => {
 
+        })
+    }
 
     const getCartItems = async () => {
         token && await axios.post(process.env.NEXT_PUBLIC_URL + "/api/getCartItem", {}, {
@@ -80,6 +99,7 @@ const Cart = () => {
         if (token) {
             getCartItems()
         }
+        getNewProducts()
     }, [token])
 
     return (
@@ -185,7 +205,40 @@ const Cart = () => {
                 {/* added products side end */}
 
                 {/* recommended products side  */}
-                <div className='min-h-[50vh]'></div>
+                <div className='min-h-[50vh] h-full w-full py-5'>
+                    {/* products  */}
+                    {loder2 ?
+                        <div className='w-full h-full flex justify-center items-center'>
+                            <Spinner size="lg" color="default" />
+                        </div>
+
+                        : curProducts?.length ? <div className='grid md:grid-cols-3 grid-cols-2 place-items-center h-auto w-full '>
+                            {curProducts && Object.keys(curProducts)?.map((k, i) => {
+                                let slide = curProducts[k]?.product_info;
+                                let id = curProducts[k]?._id;
+
+                                return <div key={i} className='py-2 '>
+                                    <ProductCard _id={id} product={slide} css={'lg:w-[20vw] md:w-[20vw] w-[42vw]  opacity-90 '} csstext={'lg:w-[20vw]  md:w-[20vw] w-[42vw] '} />
+                                </div>
+
+                            })}
+                        </div>
+                            :
+                            <div className='flex md:flex-row lg:w-[70vw] flex-col h-full'>
+                                {/* added products side */}
+                                <div className=' border-dark-grey/55 flex flex-col h-full justify-center items-center w-full'>
+                                    <h1 className='text-2xl'>Something went wrong.</h1>
+                                    <p className='text-medium text-center'>we fix as sson as posible</p>
+                                    <button className='font-crimson px-9 py-2 rounded-full bg-white mt-4 hover:opacity-80 transition-all
+                        duration-300 text-black/90 font-bold'>
+                                        <Link href={`/`}>
+                                            Shop Now
+                                        </Link>
+                                    </button>
+                                </div>
+                            </div>}
+
+                </div>
                 {/* recommended products side end */}
             </div >
         </div >
