@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from 'next/navigation';
 
 import Link from "next/link";
 import Menu from "./Menu";
@@ -33,6 +34,8 @@ const Navbar = () => {
     const [background, setBackground] = useState("bg-transparent ")
     const [searchHeight, setSearchHeight] = useState(80)
     const [megaMenu, setMegaMenu] = useState([false, 'Clothes'])
+
+    const { push } = useRouter();
 
     let { setUserAuth, userAuth: { token, profile_img }, activeUserAuth, userAuth } = useContext(UserContext)
 
@@ -85,6 +88,15 @@ const Navbar = () => {
     const handleSearch = () => {
         setSearchOpen(!searchOpen)
         // console.log(searchOpen);
+    }
+
+    const searchHandle = (e) => {
+        let query = e.target.value;
+        if (e.keyCode == 13 && query.length) {
+            console.log(query);
+            setSearchOpen(!searchOpen)
+            push(`/search/${query}`)
+        }
     }
 
 
@@ -168,7 +180,10 @@ const Navbar = () => {
 
                 </Wrapper>
                 {/* search start  */}
-                {searchOpen && <div className={`w-full text-white flex justify-around items-center z-50 md:mt-[152px] mt-[140.5px] bg-bgblack h-20 absolute`}>
+                {/* {searchOpen && <div
+
+                    // onClick={(e) => searchHandle(e)}
+                    className={`w-full text-white flex justify-around items-center z-50 md:mt-[152px] mt-[140.5px] bg-bgblack h-20 absolute`}>
                     <div className='w-[80vw] border border-gray-200 rounded-md'>
                         <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-bgblack overflow-hidden">
                             <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -178,6 +193,7 @@ const Navbar = () => {
                             </div>
 
                             <input
+                                onKeyDown={searchHandle}
                                 className="peer w-full outline-none text-sm text-gray-700 pr-2 bg-bgblack"
                                 type="text"
                                 id="search"
@@ -191,7 +207,7 @@ const Navbar = () => {
                             <VscChromeClose className="text-[15px] md:text-[20px]" />
                         </div>
                     </div>
-                </div>}
+                </div>} */}
                 {/* search end */}
                 <hr className=' absolute h-[0.01vh] w-full text-white/20 bg-white/20 md:mt-[70px] mt-[60px]' />
                 {megaMenu[0] && <MegaMenu megaMenu={megaMenu} setMegaMenu={setMegaMenu} />}

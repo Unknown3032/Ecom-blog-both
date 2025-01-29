@@ -1,5 +1,6 @@
 import React from 'react'
 import { Input } from '@nextui-org/react'
+import Link from 'next/link'
 
 
 const footer = () => {
@@ -30,6 +31,7 @@ const footer = () => {
                                     <li>About us</li>
                                     <li>Share The Look</li>
                                     <li>Summer Shredding</li>
+                                    <Link href={'/terms&condition'}> <li>terms of service</li></Link>
                                 </ul>
                             </div>
 
@@ -120,7 +122,7 @@ const footer = () => {
             </div>
 
             {/* logo section  */}
-            <div className='py-5 text-center  bottom-0 sticky bg-bgblack z-0 w-full'>
+            <div className='py-5 text-center  bottom-0 sticky bg-bgblack z-0 w-full select-none'>
                 <h1 className='font-gothic text-5xl z-10 bottom-0 w-full px-5'>Modern Sadhu</h1>
             </div>
             {/* logo section end */}

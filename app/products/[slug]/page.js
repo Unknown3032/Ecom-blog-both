@@ -1,4 +1,5 @@
 'use client'
+import React, { useEffect, useState } from 'react'
 
 import DrawerFilter from '@/components/ProductPage/DrawerFilter'
 import Filter from '@/components/ProductPage/Filter'
@@ -13,7 +14,6 @@ import Link from 'next/link'
 
 
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 import { Spinner } from '@nextui-org/react';
 
 
