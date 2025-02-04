@@ -31,7 +31,7 @@ const footer = () => {
                                     <li>About us</li>
                                     <li>Share The Look</li>
                                     <li>Summer Shredding</li>
-                                    <Link href={'/terms&condition'}> <li>terms of service</li></Link>
+                                    {/* <Link href={'/terms&condition'}> <li>terms of service</li></Link> */}
                                 </ul>
                             </div>
 
@@ -50,11 +50,11 @@ const footer = () => {
                             <div className=' md:w-[50%] w-full py-5 h-full border-b md:border-b-0 border-dark-grey  md:border-r flex flex-col justify-center items-center '>
                                 <div>
                                     <ul className='text-white/70 text-sm font-gelasio gap-2 flex flex-wrap text-center '>
-                                        <li>.Privacy Policy</li>
-                                        <li>.Terms of Service </li>
-                                        <li>.Accessibility</li>
+                                        <Link href={'/privacy-policy'}> <li>.Privacy Policy</li></Link>
+                                        <Link href={'/terms&condition'}> <li>.Terms of Service </li></Link>
+                                        {/* <Link href={'/privacy-policy'}> <li>.Accessibility</li></Link> */}
                                     </ul>
-                                    <p className='text-white/70 text-sm font-gelasio'>Do not sell or share my personal information</p>
+                                    <p className='text-white/70 text-sm font-gelasio'>we don't sell or share your personal information</p>
                                     <p className='text-small  mt-3'>© 2024 •  Modern Sadhu • All Rights Reserved</p>
                                 </div>
                             </div>
